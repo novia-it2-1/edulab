@@ -1,0 +1,28 @@
+<?php
+class Edulab_Model_Part extends Zend_Db_Table_Abstract
+{
+	protected $_name = 'parts';
+	
+	
+	
+	public function getParts($project_id)
+	{
+		$select = $this->select();
+	
+		$select->where('project_id = ?', $project_id);
+		return $this->fetchAll($select);
+	}
+	
+	public function getPart($part_id = null)
+	{
+		$select = $this->select();
+		
+		if(!is_null($part_id))
+		{
+			$this->part_id = $part_id;
+			$select->where('part_id = ?', $part_id);
+			return $this->fetchRow($select);
+		}
+		return false;
+	}
+?>
