@@ -31,7 +31,7 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 	
 	public function addResources($name)
 	{
-		$data = "fullname"=>$fullname;
+		$data = "name"=>$name;
 					  
 					  $this->insert($data);
 	}

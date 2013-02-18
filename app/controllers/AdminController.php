@@ -20,7 +20,7 @@ class AdminController extends Zend_Controller_Action
 		
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
-		$form = new Edulab_Form_Add();
+		$form = new Edulab_Form_Addproject();
 		
 		if($mode == "new")
 		{

@@ -14,5 +14,11 @@ class IndexController extends Zend_Controller_Action
 	{
 
 	}
+	
+	public function projectAction()
+	{
+		$projects = new Edulab_Model_Project();
+		
+	}
 }
 ?>
