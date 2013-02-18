@@ -28,3 +28,11 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 			}
 		return $this->fetchAll($select);
 	}
+	
+	public function addResources($name)
+	{
+		$data = "fullname"=>$fullname;
+					  
+					  $this->insert($data);
+	}
+}

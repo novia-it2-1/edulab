@@ -25,4 +25,17 @@ class Edulab_Model_Part extends Zend_Db_Table_Abstract
 		}
 		return false;
 	}
+	
+	public function addParts($project_id,$title,$comment,$deadline,$status)
+	{
+		$data = array("project_id"=>$project_id,
+					  "title"=>$title,
+					  "comment"=>$comment,
+					  "deadline"=>$deadline,
+					  "status"=>$status);
+					  
+					  $this->insert($data);
+	}
+	
+}
 ?>
