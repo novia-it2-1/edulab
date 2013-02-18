@@ -9,26 +9,28 @@ public function init()
 		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$this->setAction($baseUrl . '/admin/part/mode/save');
 
-        $id = $this->createElement('hidden','id');
+        $project_id = $this->createElement('hidden','project_id');
+		$project_id -> setValue(1);
         $title = $this->createElement('text','title');
         $title ->setLabel('Title:')
                ->setAttrib('size',50)
 			   ->setRequired(true);
-        $description = $this->createElement('text','description');
-        $description->setLabel('Description:')
-					->setAttrib('size',50)
+        $comment = $this->createElement('text','comment');
+        $comment->setLabel('Comment:')
+					->setAttrib('size',50);
+        $deadline = $this->createElement('text','deadline');
+        $deadline	->setLabel('Deadline:')
+					->setAttrib('size',10)
+					->addValidator('date')
 					->setRequired(true);
-        $programmecode = $this->createElement('text','programmecode');
-        $programmecode	->setLabel('Programmecode:')
-						->setAttrib('size',10)
-						->setRequired(true);
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 
         $this->addElements(array(
+			$project_id,
             $title,
-			$description,
-			$programmecode,
+			$comment,
+			$deadline,
 			$submit
         ));
     }

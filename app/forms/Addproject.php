@@ -12,8 +12,7 @@ public function init()
         $id = $this->createElement('hidden','id');
         $title = $this->createElement('text','title');
         $title ->setLabel('Title:')
-               ->setAttrib('size',50)
-			   ->setRequired(true);
+               ->setAttrib('size',50);
         $description = $this->createElement('text','description');
         $description->setLabel('Description:')
 					->setAttrib('size',50)

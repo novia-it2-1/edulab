@@ -6,12 +6,13 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 	public function getResources($part_id = null, $date = null)
 	{	
 		$select = $this->select();
-		$select->joinRight(array('p' => 'parts_resources_link'),'resource_id = p.resource_id');
+		$select->setIntegrityCheck(false)->from(array('r' => $this->_name));
+		$select->joinLeft(array('p' => 'parts_resources_link'),'r.resource_id = p.resource_id','date');
 		if(!is_null($part_id))
 		{
 			$select->where('p.part_id = ?', $part_id);
 		}
-		if(!is_null($date_id))
+		if(!is_null($date))
 			{
 				$select->where('p.date = ?', $date);
 			}
@@ -31,8 +32,8 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 	
 	public function addResources($name)
 	{
-		$data = "name"=>$name;
+		$data = array("name"=>$name);
 					  
-					  $this->insert($data);
+				$this->insert($data);
 	}
 }

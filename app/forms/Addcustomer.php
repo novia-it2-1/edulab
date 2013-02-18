@@ -20,13 +20,17 @@ public function init()
 					->setRequired(true);
         $phone = $this->createElement('text','phone');
         $phone	->setLabel('Phone:')
-				->setAttrib('size',10)
+				->setAttrib('size',10);
 		$mail = $this->createElement('text','mail');
         $mail	->setLabel('Mail:')
-				->setAttrib('size',40)
-		$gender = $this->createElement('text','gender');
-        $gender	->setLabel('Gender:')
-				->setAttrib('size',6)
+				->setAttrib('size',40);
+		$gender = $this->createElement('radio','gender');
+        $gender->setLabel('Gender:')
+            ->addMultiOptions(array(
+                    0 => 'Male',
+                    1 => 'Female' 
+                        ))
+				->setSeparator('')
 				->setRequired(true);
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
