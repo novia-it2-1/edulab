@@ -14,6 +14,78 @@ class AdminController extends Zend_Controller_Action
 	{
 		$this->view->test = "Controller output";
 	}
+		
+	//
+	// experiment
+	// // // // // // // // // // // // // // // // // // // // // // 
+	public function loginAction()
+	{
+		if(Zend_Auth::getInstance()->hasIdentity())
+		{
+			// temporary redirect
+			$this->_redirect('index/index');
+		}
+		
+		$request = $this->getRequest();
+				
+		$form = new Edulab_Form_LoginForm();
+		
+		if($request->isPost())
+		{
+			if($form->isValid($this->_request->getPost()))
+			{
+				$authAdapter = $this->getAuthAdapter();
+		
+				$username = $form->getValue('username');
+				$password = $form->getValue('password');
+		
+				$authAdapter->setIdentity($username)
+							->setCredential(sha1(md5($password)));
+							
+				$auth = Zend_Auth::getInstance();
+				$result = $auth->authenticate($authAdapter);
+				
+				if($result->isValid())
+				{
+					$id = $authAdapter->getResultRowObject();
+					
+					$authStorage = $auth->getStorage();
+					$authStorage->write($id);
+					
+					// temporary redirect
+					$this->_redirect('index/index');
+				}
+				else
+				{
+					$this->view->errorMessage = "Username or password is invalid";
+				}
+			}
+		}
+			
+		$this->view->form = $form;
+	}
+	
+	public function logoutAction()
+	{
+		Zend_Auth::getInstance()->clearIdentity();
+		
+		// temporary redirection
+		$this->_redirect('index/index');
+	}
+	
+	private function getAuthAdapter()
+	{
+		$authAdapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
+		
+		$authAdapter->setTableName('user')
+					->setIdentityColumn('username')
+					->setCredentialColumn('password');
+					
+		return $authAdapter;
+	}	
+	// // // // // // // // // // // // // // // // // // // // // // 
+	// experiment
+	//
 	
 	public function projectAction()
 	{
@@ -194,6 +266,31 @@ class AdminController extends Zend_Controller_Action
 			$this->_redirect('admin/projectcustomer/mode/new');
 		}
 	}
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

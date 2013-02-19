@@ -1,9 +1,7 @@
 <?php
 class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 {
-	protected $_name = 'customers';
-	
-	
+	protected $_name = 'customers';	
 	
 	public function getCustomers($customer_id = null)
 	{
@@ -15,8 +13,8 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 			$select->where('customer_id = ?', $customer_id);
 			return $this->fetchRow($select);
 		}
-		return $this->fetchAll($select);
 		
+		return $this->fetchAll($select);		
 	}
 	
 	public function addCustomers($fullname,$unit,$phone,$mail,$gender)

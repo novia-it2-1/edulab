@@ -22,6 +22,12 @@ class Edulab_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			'namespace' => 'Edulab_',
 		));
 		
+		//$acl = new Edulab_Model_AccessCheck(null, null);
+		//$auth = Zend_Auth::getInstance();
+		
+		//$fc = Zend_Controller_Front::getInstance();
+		//$fc->registerPlugin(new Edulab_Model_AccessCheck($acl, $auth));
+		
 		// Return it so that it can be stored by the bootstrap
 		return $autoLoader;
 	}
