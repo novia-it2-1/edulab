@@ -6,12 +6,19 @@
 	<?php echo $this->loadSkin($this->skin); ?>
 	<?php echo $this->headScript(); ?>
 	<?php echo $this->headLink(); ?>
-</head>
-<body>
+	
+<title><?php echo $this->escape($this->pageTitle); echo " - Binary Vibes BizSense"; ?></title>
+        <?php echo $this->dojo();
+             echo $this->dojo()->addStylesheetModule('dijit.themes.tundra');
 
-<div id="wrapper">
-	<?php echo $this->layout()->content?>
-</div>
+       ?>
+</head>
+<body class="tundra">
+ 
+ <div id="wrapper">
+            <?php  echo $this->layout()->content ?>
+ </div>
+
 
 </body>
 </html>

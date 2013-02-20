@@ -6,13 +6,16 @@ class Edulab_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// Initialize view
 		$view = new Zend_View();
 		$view->skin = "default";
-		
+		Zend_Dojo::enableView($view);
 		// Add it to the ViewRenderer
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 		$viewRenderer->setView($view);
 		
 		// Return it, so that it can be stored by the bootstrap
 		return $view;
+		
+		
+	
 	}
 	
 	protected function _initAutoload()

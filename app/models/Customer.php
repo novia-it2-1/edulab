@@ -6,8 +6,9 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 	public function getCustomers($customer_id = null)
 	{
 		$select = $this->select();
-		$select->joinRight(array('c' => 'projects_customers_link'),'project_id = c.project_id');
-		if(!is_null($project_id))
+		$select->setIntegrityCheck(false)->from(array('c' => $this->_name));
+		$select->joinLeft(array('p' => 'projects_customers_link'),'c.customer_id = p.customer_id' 	);
+		if(!is_null($customer_id))
 		{
 			$this->customer_id = $customer_id;
 			$select->where('customer_id = ?', $customer_id);

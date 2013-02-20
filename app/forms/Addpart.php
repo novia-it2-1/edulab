@@ -18,11 +18,9 @@ public function init()
         $comment = $this->createElement('text','comment');
         $comment->setLabel('Comment:')
 					->setAttrib('size',50);
-        $deadline = $this->createElement('text','deadline');
-        $deadline	->setLabel('Deadline:')
-					->setAttrib('size',10)
-					->addValidator('date')
-					->setRequired(true);
+         $deadline = new Zend_Dojo_Form_Element_DateTextBox('deadline');
+        $deadline->setLabel('Date:');
+		
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 

@@ -21,10 +21,9 @@ public function init()
 		}
 		
 		
-        $date = $this->createElement('text','date');
-        $date	->setLabel('Date:')
-				->addValidator('date')
-				->setRequired(true);
+        $date = new Zend_Dojo_Form_Element_DateTextBox('date');
+        $date->setLabel('Date:');
+		
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 

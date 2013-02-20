@@ -243,6 +243,7 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addprojectcustomer();
 		
+		
 		if($mode == "new")
 		{
 			$this->view->form=$form;
@@ -255,11 +256,13 @@ class AdminController extends Zend_Controller_Action
 				if($form->isValid($formData))
 				{
 				$project_id = $form->getValue('project_id');
-				$customers = $form->getValue('customers');
+				$customer_id = $form->getValue('customer_id');
 				$is_main_customer = $form->getValue('is_main_customer');
 				
+				
+				
 				$projectcustomer = new Edulab_Model_Projectcustomer();
-				$projectcustomer->addResourcedates($project_id,$customer_id,$is_main_customer);
+				$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
 				}
 			}
 			

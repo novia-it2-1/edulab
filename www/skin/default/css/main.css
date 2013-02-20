@@ -4,20 +4,10 @@
 -----------------------------
 */
 
-html, body{ padding:0px; margin:0px; }
-body{ background:#dadada url('../images/background.gif') top center repeat-y; }
-body, input, textarea{ font:14px Arial; color:#252525; }
-input, textarea{ padding:4px 10px; border:0; border-radius:4px; }
-a img, a{ border:0; }
-
 /*
 -----------------------------
  Main
 -----------------------------
 */
 
-#wrapper {
-	width:960px;
-	padding:20px 0;
-	margin:0 auto;
-}
+
