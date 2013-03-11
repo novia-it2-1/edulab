@@ -5,12 +5,13 @@ class Edulab_Form_Addresourcedate extends Zend_Form
 
 public function init()
     {
+	
+		
         $this->setMethod('post');
 		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$this->setAction($baseUrl . '/admin/resourcedate/mode/save');
 		
         $part_id = $this->createElement('hidden','part_id');
-		$part_id -> setValue(1);
 		$table = new Edulab_Model_Resource();
 		$resources = new Zend_Form_Element_Select('resource_id');
 		$resources	->setLabel('Resource:')

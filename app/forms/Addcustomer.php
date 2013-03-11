@@ -6,10 +6,9 @@ class Edulab_Form_Addcustomer extends Zend_Form
 public function init()
     {
         $this->setMethod('post');
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$this->setAction($baseUrl . '/admin/customer/mode/save');
+		
 
-        $id = $this->createElement('hidden','id');
+        $customer_id = $this->createElement('hidden','customer_id');
         $fullname = $this->createElement('text','fullname');
         $fullname ->setLabel('Name:')
                ->setAttrib('size',50)
@@ -36,6 +35,7 @@ public function init()
 		$submit->setLabel('submit');
 
         $this->addElements(array(
+			$customer_id,
             $fullname,
 			$unit,
 			$phone,

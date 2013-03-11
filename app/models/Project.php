@@ -35,5 +35,16 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 					  
 					  $this->insert($data);
 	}
+	
+	public function updateProjects($project_id,$title,$description,$programmecode)
+	{
+		$data = array("title"=>$title,
+					  "description"=>$description,
+					  "programmecode"=>$programmecode);
+					  
+		$where = array("project_id = ?"=>$project_id);
+					  
+					  $this->update($data, $where);
+	}
 }
 ?>

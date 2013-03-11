@@ -6,13 +6,13 @@ class Edulab_Form_Addproject extends Zend_Form
 public function init()
     {
         $this->setMethod('post');
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$this->setAction($baseUrl . '/admin/project/mode/save');
+		
 
-        $id = $this->createElement('hidden','id');
+        $project_id = $this->createElement('hidden','project_id');
         $title = $this->createElement('text','title');
         $title ->setLabel('Title:')
-               ->setAttrib('size',50);
+               ->setAttrib('size',50)
+			   ->setRequired(true);
         $description = $this->createElement('text','description');
         $description->setLabel('Description:')
 					->setAttrib('size',50)
@@ -25,6 +25,7 @@ public function init()
 		$submit->setLabel('submit');
 
         $this->addElements(array(
+			$project_id,
             $title,
 			$description,
 			$programmecode,
