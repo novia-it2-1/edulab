@@ -13,7 +13,7 @@ public function init()
         $title ->setLabel('Title:')
                ->setAttrib('size',50)
 			   ->setRequired(true);
-        $description = $this->createElement('text','description');
+        $description = $this->createElement('textarea','description');
         $description->setLabel('Description:')
 					->setAttrib('size',50)
 					->setRequired(true);
