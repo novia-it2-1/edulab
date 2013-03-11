@@ -13,7 +13,7 @@ public function init()
         $title ->setLabel('Title:')
                ->setAttrib('size',50)
 			   ->setRequired(true);
-        $comment = $this->createElement('text','comment');
+        $comment = $this->createElement('textarea','comment');
         $comment->setLabel('Comment:')
 					->setAttrib('size',50);
         $deadline = new Zend_Dojo_Form_Element_DateTextBox('deadline');
