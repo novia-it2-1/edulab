@@ -2,8 +2,8 @@
 class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'customers';	
-	
-		public function getCustomer($customer_id = null){
+
+	public function getCustomer($customer_id = null){
 		$select = $this->select();
 		if(!is_null($customer_id))
 		{
@@ -12,6 +12,19 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 			return $this->fetchRow($select);
 		}
 		return $this->fetchAll($select);
+	}
+	
+	public function getMainCustomer($project_id){
+		$select = $this->select();
+		if(isset($project_id))
+		{
+			$select->setIntegrityCheck(false)->from(array('c' => $this->_name));
+			$select->joinRight(array('pcl' => 'projects_customers_link'), 'c.customer_id = pcl.customer_id');
+			$select->where('pcl.project_id = ?', $project_id);
+			$select->where('pcl.is_main_customer = ?', 1);
+			return $this->fetchRow($select);
+		}
+		return false;
 	}
 	
 	public function getCustomers($customer_id = null)

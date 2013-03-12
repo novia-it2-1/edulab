@@ -6,8 +6,6 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 	
 	
 	public function getProjects($project_id = null, $is_archived = 0){
-		
-		
 		$select = $this->select();
 		
 		if(!is_null($project_id))
@@ -20,11 +18,10 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 		return $this->fetchAll($select);
 	}
 	
-	public function getParts()
+	public function getParts($project_id = null)
 	{
 		$parts = new Edulab_Model_Part();
 		return $parts->getParts($project_id);
-	
 	}
 	
 	public function addProjects($title,$description,$programmecode)

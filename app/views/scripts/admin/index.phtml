@@ -1,1 +1,37 @@
-<?php echo $this->test; ?>
+<?php foreach($this->projects->getProjects() as $project): ?>
+<?php
+$parts = $this->projects->getParts($project->project_id);
+$tot = count($parts);
+$count = 0;
+$percentage = 0;
+foreach($parts as $part){ 
+	if($part->status == '4'){ $count++; } 
+	$percentage += 100 / $tot / 4 * $part->status;
+}
+?>
+<div class="project">
+	<div class="info">
+		<a href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $project->project_id; ?>"><h3><?php echo $project->title; ?></h3></a>
+		<span><?php echo $project->programmecode; ?></span>
+		<span>
+			<?php
+			
+			$mainCustomer = $this->customer->getMainCustomer($project->project_id);
+			if($mainCustomer){ echo $mainCustomer->fullname; }
+			?>
+		</span>
+	</div>
+	<div class="stats">
+		<div class="parts"><?php echo $count; ?> out of <?php echo $tot; ?> parts done</div>
+		<div class="deadline">12 days to deadline</div>
+	</div>
+	<div class="progress">
+		<div class="full" style="opacity:<?php echo number_format($percentage / 100, 2, '.', ''); ?>">
+			&nbsp;
+		</div>
+		<div class="percentage">
+			<?php echo round($percentage); ?>%
+		</div>
+	</div>
+</div>
+<?php endforeach; ?>

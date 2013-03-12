@@ -4,10 +4,111 @@
 -----------------------------
 */
 
+html, body { padding:0; margin:0; }
+body { font:14px Arial; }
+a { text-decoration:none; }
+h1, h2, h3 { margin:0px; padding:0px; }
+form { margin:0px; padding:0px; }
+
 /*
 -----------------------------
  Main
 -----------------------------
 */
 
+#wrapper { width: 960px; margin:0 auto; }
+#header { padding: 30px 0 10px; height:60px; border-bottom:2px solid #75a5e7; }
+#hleft { float:left; }
+#hright { float:right; }
+#content { padding: 30px 0; }
+.page-title { padding: 0 0 20px; }
+#columns { margin:0 0 0 -40px; }
+.column { float:left; width:460px; margin-left:40px; }
 
+/* Mobile view */
+@media screen and (max-width: 960px) {
+	#wrapper { width:460px; padding:0 10px; }
+	#header { width:460px; }
+	#columns { margin:0px; }
+	.column { margin-left:0px; }
+}
+
+/*
+-----------------------------
+ Admin - Header
+-----------------------------
+*/
+
+.link { 
+	float:left; 
+	display:block; 
+	padding:40px 0 0; 
+	background-position:center top; 
+	background-repeat:no-repeat;
+	font-weight:bold;
+	color:#313131;
+}
+.link:hover {
+	color:#75a5e7;
+}
+#hleft .link { margin-right:40px; }
+#hright .link { margin-left:40px; }
+#link-home { background-image:url('../images/home.gif'); }
+#link-project { background-image:url('../images/project.gif'); }
+#link-resource { background-image:url('../images/resource.gif'); }
+#link-logout { background-image:url('../images/logout.gif'); }
+
+/*
+-----------------------------
+ Admin - Form
+-----------------------------
+*/
+
+.zend_form { margin:0; }
+.zend_form dt { background-color:#dadada; padding:16px 20px 0; }
+.zend_form dd { background-color:#dadada; padding:0 16px 20px; margin:0 0 10px; }
+dt#submit-label { background:none; padding:0; margin:0; height:1px; }
+dd#submit-element { float:right; padding:16px 20px; }
+dd input{ width:98%; }
+dd textarea{ width:98%; height:200px; }
+ul.errors{ 
+	list-style:none;
+	background-color:#f1a3a3; 
+	border:1px solid #e87474; 
+	padding:10px; 
+	margin-top:10px; 
+}
+ul.errors li{
+	color:#781111;
+	font-size:12px;
+	font-weight:bold;
+}
+
+/* Hide all id fields */
+#project_id-label, #project_id-element { display:none; }
+
+/*
+-----------------------------
+ Admin - Project list
+-----------------------------
+*/
+
+.project { background-color:#dadada; height:100px; margin-bottom:10px; }
+
+.project .info { float:left; padding: 24px 0 24px 30px; min-width:380px; }
+.project .info h3 { font-size:22px; margin-bottom:10px; font-weight:normal; }
+.project .info a { color:#000; }
+.project .info a:hover { color:#2a549e; }
+.project .info span { color:#626262; margin-right:30px; }
+
+.project .stats { float:left; padding: 24px 0 24px 25px; }
+
+.project .progress { position: relative; background-color: #ff5c5c; float:right; width:40px; height:100px; }
+.project .progress .percentage { position: absolute; font-size:11px; text-align:center; width:40px; bottom:6px; }
+.project .progress .full { background-color: #64ff5c; width:40px; height:100px; }
+
+/* Mobile view */
+@media screen and (max-width: 960px) {
+	.project .info { min-width:200px; }
+	.project .progress { width:10px; text-indent:-9999em; overflow:hidden; }
+}
