@@ -170,6 +170,20 @@ class AdminController extends Zend_Controller_Action
 			$form->populate((array) $data);
 			$form->status->setValue(0);
 			$this->view->form=$form;
+			if($this->getRequest()->isPost())
+			{
+				$formData = $this->_request->getPost();
+				if($form->isValid($formData))
+				{
+				$project_id = $form->getValue('project_id');
+				$title = $form->getValue('title');
+				$comment = $form->getValue('comment');
+				$deadline = $form->getValue('deadline');
+				
+				$parts->addParts($project_id,$title,$comment,$deadline);
+				$this->_redirect('admin/project/mode/edit/id/' .$project_id);
+				}
+			}
 		}
 		elseif($mode == "edit")
 		{
@@ -204,24 +218,6 @@ class AdminController extends Zend_Controller_Action
 			$this->view->page_title = 'Edit part #' . $part_id;
 			$this->view->form=$form;
 			$this->view->project_id = $project_id;
-		}
-		elseif($mode == "save")
-		{
-			if($this->getRequest()->isPost())
-			{
-				$formData = $this->_request->getPost();
-				if($form->isValid($formData))
-				{
-				$project_id = $form->getValue('project_id');
-				$title = $form->getValue('title');
-				$comment = $form->getValue('comment');
-				$deadline = $form->getValue('deadline');
-				
-				$parts->addParts($project_id,$title,$comment,$deadline);
-				}
-			}
-			
-			$this->_redirect('admin/part/mode/new');
 		}
 		elseif($mode == "delete")
 		{
