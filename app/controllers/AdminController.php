@@ -12,7 +12,9 @@ class AdminController extends Zend_Controller_Action
 	// admin/index
 	public function indexAction()
 	{
-		$this->view->test = "Controller output";
+		$projects = new Edulab_Model_Project();
+		$this->view->projects = $projects;
+		$this->view->customer = new Edulab_Model_Customer();
 	}
 		
 	//
@@ -97,37 +99,36 @@ class AdminController extends Zend_Controller_Action
 		
 		if($mode == "new")
 		{
+			$this->view->page_title = 'New Project';
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/project/mode/save');
+			$form->setAction($baseUrl . '/admin/project/mode/new');
 			$this->view->form=$form;
 			
+			if($this->getRequest()->isPost())
+			{
+				$formData = $this->_request->getPost();
+				$form->populate((array) $formData);
+				if($form->isValid($formData))
+				{
+					$title = $form->getValue('title');
+					$description = $form->getValue('description');
+					$programmecode = $form->getValue('programmecode');
+					
+					$projects->addProjects($title,$description,$programmecode);
+					$this->_redirect('admin/project/mode/new');
+				}
+			}
 		}
 		elseif($mode == "edit")
 		{
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
+			$this->view->page_title = 'Edit Project #' . $id;
 			$data = $projects->getProjects($id,0)->toArray();
 			$form->populate((array) $data);
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/project/mode/update');
 			$this->view->form=$form;
-		}
-		elseif($mode == "save")
-		{
-			if($this->getRequest()->isPost())
-			{
-				$formData = $this->_request->getPost();
-				if($form->isValid($formData))
-				{
-				$title = $form->getValue('title');
-				$description = $form->getValue('description');
-				$programmecode = $form->getValue('programmecode');
-				
-				$projects->addProjects($title,$description,$programmecode);
-				}
-			}
-			
-			$this->_redirect('admin/project/mode/new');
 		}
 		elseif($mode == "update")
 		{
