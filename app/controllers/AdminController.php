@@ -115,7 +115,7 @@ class AdminController extends Zend_Controller_Action
 					$programmecode = $form->getValue('programmecode');
 					
 					$projects->addProjects($title,$description,$programmecode);
-					$this->_redirect('admin/project/mode/new');
+					$this->_redirect('admin');
 				}
 			}
 		}
@@ -123,18 +123,12 @@ class AdminController extends Zend_Controller_Action
 		{
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
+			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+			$form->setAction($baseUrl . '/admin/project/mode/edit/project_id/' . $id);
 			$this->view->page_title = 'Edit Project #' . $id;
 			$project = $projects->getProjects($id,0);
 			$data = $project->toArray();
 			$form->populate((array) $data);
-			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/project/mode/update');
-			$this->view->form = $form;
-			$this->view->project = $project;
-			$this->view->parts = $projects->getParts($id);
-		}
-		elseif($mode == "update")
-		{
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -146,11 +140,13 @@ class AdminController extends Zend_Controller_Action
 				$programmecode = $form->getValue('programmecode');
 				
 				$projects->updateProjects($project_id,$title,$description,$programmecode);
+				$this->_redirect('admin/project/mode/edit/id/' .$project_id);
 				}
 			}
-			$this->_redirect('admin/project');
+			$this->view->form = $form;
+			$this->view->project = $project;
+			$this->view->parts = $projects->getParts($id);
 		}
-	
 	}
 	
 	public function partAction()
@@ -240,9 +236,6 @@ class AdminController extends Zend_Controller_Action
 		if($mode == "new")
 		{
 			$this->view->form=$form;
-		}
-		elseif($mode == "save")
-		{
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -251,10 +244,9 @@ class AdminController extends Zend_Controller_Action
 				$name = $form->getValue('name');
 				$resources = new Edulab_Model_Resource();
 				$resources->addResources($name);
+				$this->_redirect('admin/resource/mode/new');
 				}
 			}
-			
-			$this->_redirect('admin/resource/mode/new');
 		}
 		elseif($mode == "delete")
 		{

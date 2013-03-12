@@ -6,8 +6,6 @@ class Edulab_Form_Addresource extends Zend_Form
 public function init()
     {
         $this->setMethod('post');
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$this->setAction($baseUrl . '/admin/resource/mode/save');
 
         $id = $this->createElement('hidden','id');
         $name = $this->createElement('text','name');
