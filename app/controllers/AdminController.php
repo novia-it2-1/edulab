@@ -265,22 +265,7 @@ class AdminController extends Zend_Controller_Action
 						
 		if($mode == "new")
 		{
-			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/customer/mode/save');
 			$this->view->form=$form;
-		}
-		elseif($mode == "edit")
-		{
-			$request = $this->getRequest();
-			$customer_id = $request->getParam('customer_id');
-			$data = $customers->getCustomer($customer_id)->toArray();
-			$form->populate((array) $data);
-			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/customer/mode/update');
-			$this->view->form=$form;
-		}
-		elseif($mode == "save")
-		{
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -292,13 +277,18 @@ class AdminController extends Zend_Controller_Action
 				$mail = $form->getValue('mail');
 				$gender = $form->getValue('gender');
 				$customers->addCustomers($fullname,$unit,$phone,$mail,$gender);
+				$this->_redirect('admin/customer/mode/new');
 				}
 			}
-			
-			$this->_redirect('admin/customer/mode/new');
 		}
-		elseif($mode == "update")
+		elseif($mode == "edit")
 		{
+			$request = $this->getRequest();
+			$customer_id = $request->getParam('customer_id');
+			$data = $customers->getCustomer($customer_id)->toArray();
+			$form->populate((array) $data);
+			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+			$form->setAction($baseUrl . '/admin/customer/mode/edit/customer_id/' . $customer_id);
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -312,9 +302,10 @@ class AdminController extends Zend_Controller_Action
 				$gender = $form->getValue('gender');
 				
 				$customers->updateCustomers($customer_id,$fullname,$unit,$phone,$mail,$gender);
+				$this->_redirect('admin/customer');
 				}
 			}
-			$this->_redirect('admin/customer');
+			$this->view->form=$form;
 		}
 	}
 	
@@ -331,10 +322,6 @@ class AdminController extends Zend_Controller_Action
 			$part_id = $request->getParam('part_id');
 			$data = array('part_id' => $part_id);
 			$form->populate((array) $data);
-			$this->view->form=$form;
-		}
-		elseif($mode == "save")
-		{
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -344,25 +331,24 @@ class AdminController extends Zend_Controller_Action
 				$resource_id = $form->getValue('resource_id');
 				$date = $form->getValue('date');
 				$resourcedates->addResourcedates($part_id,$resource_id,$date);
+				$this->_redirect('admin/resourcedate/mode/new/part_id/' . $part_id);
 				}
 			}
-			$this->_redirect('admin/resourcedate/mode/new');
+			$this->view->form=$form;
 		}
 	}
 	
 	public function projectcustomerAction()
 	{
+		$form = new Edulab_Form_Addprojectcustomer();
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
-		$form = new Edulab_Form_Addprojectcustomer();
-		
-		
 		if($mode == "new")
 		{
+			$project_id = $request->getParam('project_id');
+			$data = array('project_id' => $project_id);
+			$form->populate((array) $data);
 			$this->view->form=$form;
-		}
-		elseif($mode == "save")
-		{
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -371,15 +357,11 @@ class AdminController extends Zend_Controller_Action
 				$project_id = $form->getValue('project_id');
 				$customer_id = $form->getValue('customer_id');
 				$is_main_customer = $form->getValue('is_main_customer');
-				
-				
-				
 				$projectcustomer = new Edulab_Model_Projectcustomer();
 				$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
+				$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
 				}
 			}
-			
-			$this->_redirect('admin/projectcustomer/mode/new');
 		}
 	}
 }

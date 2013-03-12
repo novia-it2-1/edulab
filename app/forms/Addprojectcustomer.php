@@ -6,9 +6,6 @@ class Edulab_Form_Addprojectcustomer extends Zend_Form
 public function init()
     {
         $this->setMethod('post');
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$this->setAction($baseUrl . '/admin/projectcustomer/mode/save');
-
         $project_id = $this->createElement('hidden','project_id');
         $table = new Edulab_Model_Customer();
 		$customers = new Zend_Form_Element_Select('customer_id');

@@ -11,7 +11,7 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 			$select->where('customer_id = ?', $customer_id);
 			return $this->fetchRow($select);
 		}
-		return $this->fetchAll($select);
+		return false;
 	}
 	
 	public function getMainCustomer($project_id){
@@ -26,22 +26,22 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 		}
 		return false;
 	}
-	
-	public function getCustomers($customer_id = null)
+	public function getCustomers($project_id = null)
 	{
 		$select = $this->select();
 		$select->setIntegrityCheck(false)->from(array('c' => $this->_name));
-		$select->joinLeft(array('p' => 'projects_customers_link'),'c.customer_id = p.customer_id' 	);
-		if(!is_null($customer_id))
+		if(!is_null($project_id))
 		{
-			$this->customer_id = $customer_id;
-			$select->where('customer_id = ?', $customer_id);
-			return $this->fetchRow($select);
+			$this->project_id = $customer_id;
+			$select->joinLeft(array('p' => 'projects_customers_link'),'c.customer_id = p.customer_id');
+			$select->where('project_id = ?', $project_id);
 		}
-		
+		else
+		{
+			$select->order('c.fullname','ASC');
+		}
 		return $this->fetchAll($select);		
 	}
-	
 	public function addCustomers($fullname,$unit,$phone,$mail,$gender)
 	{
 		$data = array("fullname"=>$fullname,
