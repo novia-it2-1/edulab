@@ -224,12 +224,14 @@ class AdminController extends Zend_Controller_Action
 			$this->_redirect('admin/part/mode/new');
 		}
 		elseif($mode == "delete")
-			{
-				$delete = new Edulab_Model_Part();
-				$request = $this->getRequest();
-				$part_id = $request->getParam('part_id');
-				$delete->deletePart($part_id);
-			}
+		{
+			$delete = new Edulab_Model_Part();
+			$request = $this->getRequest();
+			$project_id = $request->getParam('project_id');
+			$part_id = $request->getParam('part_id');
+			$delete->deletePart($part_id);
+			$this->_redirect('admin/project/mode/edit/id/' .$project_id);
+		}
 	}
 	
 	
