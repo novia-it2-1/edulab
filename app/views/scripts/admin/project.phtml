@@ -13,6 +13,15 @@
 			<h3>Project Parts</h2>
 		</div>
 		<?php if(isset($this->parts)): ?>
+		<script type="text/javascript">
+		
+		function goto(loc, part_name){
+			if(confirm('Are you sure you want to delete "' + part_name + '"')){
+				window.location.href = loc;
+			}
+		}
+			
+		</script>
 		<div class="parts">
 		<?php foreach($this->parts as $part): ?>
 			<div class="part">
@@ -28,7 +37,7 @@
 				<div class="comment">
 					<?php echo substr($part->comment, 0, 230); ?><?php if(strlen($part->comment) > 230){ echo '...'; } ?>
 					<div class="actions">
-						<a class="delete" href="<?php echo ROOT; ?>admin/part/mode/delete">Delete</a>
+						<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/mode/delete/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
 						<a class="edit" href="<?php echo ROOT; ?>admin/part/mode/edit/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>">Edit</a>
 					</div>
 				</div>
