@@ -3,9 +3,46 @@
 </div>
 <div id="columns">
 	<div class="column">
+		<div class="sub-title">
+			<h3>General Information</h2>
+		</div>
 		<?php echo $this->form; ?>
 	</div>
 	<div class="column">
-		Description blabla
+		<div class="sub-title">
+			<h3>Project Parts</h2>
+		</div>
+		<?php if(isset($this->parts)): ?>
+		<div class="parts">
+		<?php foreach($this->parts as $part): ?>
+			<div class="part">
+				<div class="info">
+					<h4><?php echo $part->title; ?></h4>
+				</div>
+				<div class="status">
+					<a <?php if($part->status == 1){ echo 'class="active"'; } ?> href="#">Not Started</a>
+					<a <?php if($part->status == 2){ echo 'class="active"'; } ?> href="#">In Progress</a>
+					<a <?php if($part->status == 3){ echo 'class="active"'; } ?> href="#">Finalizing</a>
+					<a <?php if($part->status == 4){ echo 'class="active"'; } ?> href="#">Completed</a>
+				</div>
+				<div class="comment">
+					<?php echo substr($part->comment, 0, 230); ?><?php if(strlen($part->comment) > 230){ echo '...'; } ?>
+					<div class="actions">
+						<a class="delete" href="<?php echo ROOT; ?>admin/part/mode/delete">Delete</a>
+						<a class="edit" href="<?php echo ROOT; ?>admin/part/mode/edit/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>">Edit</a>
+					</div>
+				</div>
+			</div>
+		<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
+		<div class="sub-title">
+			<h3>Contact Persons</h2>
+		</div>
+		<?php if(isset($this->parts)): ?>
+		<?php foreach($this->parts as $part): ?>
+			asd
+		<?php endforeach; ?>
+		<?php endif; ?>
 	</div>
 </div>

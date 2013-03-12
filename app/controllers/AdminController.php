@@ -124,11 +124,14 @@ class AdminController extends Zend_Controller_Action
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
 			$this->view->page_title = 'Edit Project #' . $id;
-			$data = $projects->getProjects($id,0)->toArray();
+			$project = $projects->getProjects($id,0);
+			$data = $project->toArray();
 			$form->populate((array) $data);
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/project/mode/update');
-			$this->view->form=$form;
+			$this->view->form = $form;
+			$this->view->project = $project;
+			$this->view->parts = $projects->getParts($id);
 		}
 		elseif($mode == "update")
 		{
@@ -170,12 +173,15 @@ class AdminController extends Zend_Controller_Action
 		elseif($mode == "edit")
 		{
 			$request = $this->getRequest();
+			$project_id = $request->getParam('project_id');
 			$part_id = $request->getParam('part_id');
+			$this->view->page_title = 'Edit part #' . $part_id;
 			$data = $parts->getPart($part_id)->toArray();
 			$form->populate((array) $data);
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/part/mode/update');
 			$this->view->form=$form;
+			$this->view->project_id = $project_id;
 		}
 		elseif($mode == "save")
 		{
