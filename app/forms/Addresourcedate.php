@@ -26,7 +26,7 @@ public function init()
         $date->setLabel('Date:');
 		
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel('submit');
+		$submit->setLabel('Save	');
 
         $this->addElements(array(
 			$part_id,

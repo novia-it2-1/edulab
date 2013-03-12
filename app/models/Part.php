@@ -36,16 +36,24 @@ class Edulab_Model_Part extends Zend_Db_Table_Abstract
 					  
 					  $this->insert($data);
 	}
-	public function updateParts($part_id,$title,$comment,$deadline)
+	public function updateParts($part_id,$title,$comment,$deadline,$status)
 	{
 		$data = array("title"=>$title,
 					  "comment"=>$comment,
-					  "deadline"=>$deadline
+					  "deadline"=>$deadline,
+					  "status"=>$status
 					  );
 					  
 		$where = array("part_id = ?"=>$part_id);
 					  
 					  $this->update($data, $where);
+	}
+	public function deletePart($part_id)
+	{
+					  
+		$where = "part_id = ".$part_id;
+					  
+					  $this->delete($where);
 	}
 }
 ?>

@@ -12,13 +12,12 @@ public function init()
         $fullname = $this->createElement('text','fullname');
         $fullname ->setLabel('Name:')
                ->setAttrib('size',50)
-			   ->setRequired(true)
-			   ->addValidator('alpha');
+			   ->setRequired(true);
         $unit = $this->createElement('text','unit');
         $unit->setLabel('Unit:')
 					->setAttrib('size',6)
 					->setRequired(true)
-					->addValidator('alnum');
+					->addValidator('Alnum',true);
         $phone = $this->createElement('text','phone');
         $phone	->setLabel('Phone:')
 				->addValidator('Digits')
@@ -35,7 +34,7 @@ public function init()
 				->setSeparator('')
 				->setRequired(true);
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel('submit');
+		$submit->setLabel('Save');
 
         $this->addElements(array(
 			$customer_id,

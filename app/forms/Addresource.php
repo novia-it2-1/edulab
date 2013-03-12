@@ -13,9 +13,9 @@ public function init()
         $name = $this->createElement('text','name');
         $name ->setLabel('Name:')
                ->setAttrib('size',50)
-			   ->addValidator('alnum');
+			   ->addValidator('Alnum',true,array('allowWhiteSpace' => true));
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel('submit');
+		$submit->setLabel('Save');
 
         $this->addElements(array(
             $name,

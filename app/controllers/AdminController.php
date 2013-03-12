@@ -168,6 +168,7 @@ class AdminController extends Zend_Controller_Action
 			$project_id = $request->getParam('project_id');
 			$data = array('project_id' => $project_id);
 			$form->populate((array) $data);
+			$form->status->setValue(0);
 			$this->view->form=$form;
 		}
 		elseif($mode == "edit")
@@ -175,11 +176,32 @@ class AdminController extends Zend_Controller_Action
 			$request = $this->getRequest();
 			$project_id = $request->getParam('project_id');
 			$part_id = $request->getParam('part_id');
-			$this->view->page_title = 'Edit part #' . $part_id;
-			$data = $parts->getPart($part_id)->toArray();
-			$form->populate((array) $data);
+			
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/part/mode/update');
+			$form->setAction($baseUrl . '/admin/part/mode/edit/project_id/' . $project_id . '/part_id/' . $part_id);
+			
+			if($this->getRequest()->isPost())
+			{
+				$formData = $this->_request->getPost();
+				if($form->isValid($formData))
+				{
+				$part_id = $form->getValue('part_id');
+				$title = $form->getValue('title');
+				$comment = $form->getValue('comment');
+				$deadline = $form->getValue('deadline');
+				$status = $form->getValue('status');
+				
+				$parts->updateParts($part_id,$title,$comment,$deadline,$status);
+				$this->_redirect('admin/project/mode/edit/id/' . $project_id);
+				}
+			}
+			else
+			{
+				$data = $parts->getPart($part_id)->toArray();
+				$form->populate((array) $data);
+			}
+			
+			$this->view->page_title = 'Edit part #' . $part_id;
 			$this->view->form=$form;
 			$this->view->project_id = $project_id;
 		}
@@ -201,29 +223,19 @@ class AdminController extends Zend_Controller_Action
 			
 			$this->_redirect('admin/part/mode/new');
 		}
-	elseif($mode == "update")
-		{
-			if($this->getRequest()->isPost())
+		elseif($mode == "delete")
 			{
-				$formData = $this->_request->getPost();
-				if($form->isValid($formData))
-				{
-				$part_id = $form->getValue('part_id');
-				$title = $form->getValue('title');
-				$comment = $form->getValue('comment');
-				$deadline = $form->getValue('deadline');
-				
-				$parts->updateParts($part_id,$title,$comment,$deadline);
-				}
+				$delete = new Edulab_Model_Part();
+				$request = $this->getRequest();
+				$part_id = $request->getParam('part_id');
+				$delete->deletePart($part_id);
 			}
-			$this->_redirect('admin/part');
-		}
 	}
 	
 	
 	public function resourceAction()
 	{
-			$request = $this->getRequest();
+		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresource();
 		
@@ -246,8 +258,14 @@ class AdminController extends Zend_Controller_Action
 			
 			$this->_redirect('admin/resource/mode/new');
 		}
+		elseif($mode == "delete")
+		{
+			$delete = new Edulab_Model_Resource();
+			$request = $this->getRequest();
+			$resource_id = $request->getParam('resource_id');
+			$delete->deleteResource($resource_id);
+		}
 	}
-	
 	public function customerAction()
 	{
 		$request = $this->getRequest();
@@ -316,13 +334,13 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresourcedate();
 		$resourcedates = new Edulab_Model_Partresource();
-		$resources = new Edulab_Model_Resource();
 		
 		if($mode == "new")
 		{
 			$request = $this->getRequest();
 			$part_id = $request->getParam('part_id');
 			$data = array('part_id' => $part_id);
+			$form->populate((array) $data);
 			$this->view->form=$form;
 		}
 		elseif($mode == "save")

@@ -13,14 +13,24 @@ public function init()
         $title ->setLabel('Title:')
                ->setAttrib('size',50)
 			   ->setRequired(true)
-			   ->addValidator('alnum');
+			   ->addValidator('Alnum',true);
         $comment = $this->createElement('textarea','comment');
         $comment->setLabel('Comment:')
 				->setAttrib('size',50);
         $deadline = new Zend_Dojo_Form_Element_DateTextBox('deadline');
         $deadline	->setLabel('Date:');
+		$status = $this->createElement('radio','status');
+        $status	->setLabel('Status:')
+				->addMultiOptions(array(
+                    0 => 'Not Started',
+                    1 => 'In Progress',
+					2 => 'Finalizing',
+					3 => 'Completed' 
+                        ))
+				->setSeparator('')
+				->setRequired(true);
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel('submit');
+		$submit->setLabel('Save');
 
         $this->addElements(array(
 			$project_id,
@@ -28,6 +38,7 @@ public function init()
             $title,
 			$comment,
 			$deadline,
+			$status,
 			$submit
         ));
     }

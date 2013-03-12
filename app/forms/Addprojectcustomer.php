@@ -24,7 +24,7 @@ public function init()
 				->setUncheckedValue(0);
 		
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel('submit');
+		$submit->setLabel('Save');
 
         $this->addElements(array(
 			$project_id,

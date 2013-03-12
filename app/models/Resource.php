@@ -36,4 +36,11 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 					  
 				$this->insert($data);
 	}
+	public function deleteResource($resource_id)
+	{
+					  
+		$where = "resource_id = ".$resource_id;
+					  
+					  $this->delete($where);
+	}
 }
