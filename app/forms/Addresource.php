@@ -12,7 +12,8 @@ public function init()
         $id = $this->createElement('hidden','id');
         $name = $this->createElement('text','name');
         $name ->setLabel('Name:')
-               ->setAttrib('size',50);
+               ->setAttrib('size',50)
+			   ->addValidator('alnum');
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 

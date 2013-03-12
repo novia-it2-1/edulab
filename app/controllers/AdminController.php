@@ -318,16 +318,6 @@ class AdminController extends Zend_Controller_Action
 			$data = array('part_id' => $part_id);
 			$this->view->form=$form;
 		}
-		elseif($mode == "edit")
-		{
-			$request = $this->getRequest();
-			$resource_id = $request->getParam('resource_id');
-			$data = $resources->getResources($resource_id)->toArray();
-			$form->populate((array) $data);
-			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/resourcedate/mode/update');
-			$this->view->form=$form;
-		}
 		elseif($mode == "save")
 		{
 			if($this->getRequest()->isPost())
@@ -335,32 +325,13 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$date = $form->getValue('date');
-				$resource_id = $form->getValue('resource_id');
 				$part_id = $form->getValue('part_id');
-				$resourcedates->addResourcedates($date,$resource_id,$part_id);
+				$resource_id = $form->getValue('resource_id');
+				$date = $form->getValue('date');
+				$resourcedates->addResourcedates($part_id,$resource_id,$date);
 				}
 			}
 			$this->_redirect('admin/resourcedate/mode/new');
-		}
-		elseif($mode == "update")
-		{
-			if($this->getRequest()->isPost())
-			{
-				$formData = $this->_request->getPost();
-				if($form->isValid($formData))
-				{
-				$customer_id = $form->getValue('customer_id');
-				$fullname = $form->getValue('fullname');
-				$unit = $form->getValue('unit');
-				$phone = $form->getValue('phone');
-				$mail = $form->getValue('mail');
-				$gender = $form->getValue('gender');
-				
-				$resourcedates->updateResourcedates($customer_id,$fullname,$unit,$phone,$mail,$gender);
-				}
-			}
-			$this->_redirect('admin/customer');
 		}
 	}
 	

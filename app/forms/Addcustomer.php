@@ -12,20 +12,23 @@ public function init()
         $fullname = $this->createElement('text','fullname');
         $fullname ->setLabel('Name:')
                ->setAttrib('size',50)
-			   ->setRequired(true);
+			   ->setRequired(true)
+			   ->addValidator('alpha');
         $unit = $this->createElement('text','unit');
         $unit->setLabel('Unit:')
 					->setAttrib('size',6)
-					->setRequired(true);
+					->setRequired(true)
+					->addValidator('alnum');
         $phone = $this->createElement('text','phone');
         $phone	->setLabel('Phone:')
+				->addValidator('Digits')
 				->setAttrib('size',10);
 		$mail = $this->createElement('text','mail');
         $mail	->setLabel('Mail:')
 				->setAttrib('size',40);
 		$gender = $this->createElement('radio','gender');
-        $gender->setLabel('Gender:')
-            ->addMultiOptions(array(
+        $gender	->setLabel('Gender:')
+				->addMultiOptions(array(
                     0 => 'Male',
                     1 => 'Female' 
                         ))

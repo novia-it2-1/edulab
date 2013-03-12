@@ -10,7 +10,6 @@ public function init()
 		$this->setAction($baseUrl . '/admin/projectcustomer/mode/save');
 
         $project_id = $this->createElement('hidden','project_id');
-		$project_id -> setValue(1);
         $table = new Edulab_Model_Customer();
 		$customers = new Zend_Form_Element_Select('customer_id');
 		$customers	->setLabel('Customer:')
@@ -20,7 +19,7 @@ public function init()
 		$customers->addMultiOption($c->customer_id, $c->fullname);
 		}
 		$check = new Zend_Form_Element_Checkbox('is_main_customer');
-		$check -> setLabel('Main')
+		$check -> setLabel('Main Contact')
 				->setCheckedValue(1)
 				->setUncheckedValue(0);
 		

@@ -12,13 +12,13 @@ public function init()
         $title = $this->createElement('text','title');
         $title ->setLabel('Title:')
                ->setAttrib('size',50)
-			   ->setRequired(true);
+			   ->setRequired(true)
+			   ->addValidator('alnum');
         $comment = $this->createElement('textarea','comment');
         $comment->setLabel('Comment:')
-					->setAttrib('size',50);
+				->setAttrib('size',50);
         $deadline = new Zend_Dojo_Form_Element_DateTextBox('deadline');
-        $deadline->setLabel('Date:');
-        
+        $deadline	->setLabel('Date:');
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 

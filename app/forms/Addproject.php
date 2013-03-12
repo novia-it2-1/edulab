@@ -11,16 +11,15 @@ public function init()
         $project_id = $this->createElement('hidden','project_id');
         $title = $this->createElement('text','title');
         $title ->setLabel('Title:')
-               ->setAttrib('size',50)
-			   ->setRequired(true);
+			   ->setRequired(true)
+			   ->addValidator('alnum');
         $description = $this->createElement('textarea','description');
         $description->setLabel('Description:')
-					->setAttrib('size',50)
 					->setRequired(true);
         $programmecode = $this->createElement('text','programmecode');
         $programmecode	->setLabel('Programmecode:')
-						->setAttrib('size',10)
-						->setRequired(true);
+						->setRequired(true)
+						->addValidator('alnum');
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('submit');
 
