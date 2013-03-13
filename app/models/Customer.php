@@ -65,5 +65,12 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 					  
 					  $this->update($data, $where);
 	}
+	public function deleteCustomer($customer_id)
+	{
+					  
+		$where = "customer_id = ".$customer_id;
+					  
+					  $this->delete($where);
+	}
 }
 ?>

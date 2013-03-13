@@ -147,6 +147,15 @@ class AdminController extends Zend_Controller_Action
 			$this->view->project = $project;
 			$this->view->parts = $projects->getParts($id);
 		}
+		elseif($mode == "delete")
+		{
+			$delete = new Edulab_Model_Project();
+			$request = $this->getRequest();
+			$project_id = $request->getParam('project_id');
+			$delete->deleteProject($project_id);
+			$this->_redirect('admin');
+		}
+		
 	}
 	
 	public function partAction()
@@ -307,6 +316,14 @@ class AdminController extends Zend_Controller_Action
 			}
 			$this->view->form=$form;
 		}
+		elseif($mode == "delete")
+		{
+			$delete = new Edulab_Model_Customer();
+			$request = $this->getRequest();
+			$customer_id = $request->getParam('customer_id');
+			$delete->deleteCustomer($customer_id);
+			$this->_redirect('admin/customer');
+		}
 	}
 	
 	public function resourcedateAction()
@@ -336,6 +353,14 @@ class AdminController extends Zend_Controller_Action
 			}
 			$this->view->form=$form;
 		}
+		elseif($mode == "delete")
+		{
+			$delete = new Edulab_Model_Partresource();
+			$request = $this->getRequest();
+			$resource_id = $request->getParam('resource_id');
+			$delete->deleteResourcedate($resource_id);
+			$this->_redirect('admin/resourcedate	');
+		}
 	}
 	
 	public function projectcustomerAction()
@@ -343,9 +368,9 @@ class AdminController extends Zend_Controller_Action
 		$form = new Edulab_Form_Addprojectcustomer();
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
+		$project_id = $request->getParam('project_id');
 		if($mode == "new")
 		{
-			$project_id = $request->getParam('project_id');
 			$data = array('project_id' => $project_id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
@@ -362,6 +387,14 @@ class AdminController extends Zend_Controller_Action
 				$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
 				}
 			}
+		}
+		elseif($mode == "delete")
+		{
+			$delete = new Edulab_Model_Projectcustomer();
+			$request = $this->getRequest();
+			$customer_id = $request->getParam('customer_id');
+			$delete->deleteProjectcustomer($customer_id);
+			$this->_redirect('admin/project/mode/edit/id/' . $project_id);
 		}
 	}
 }

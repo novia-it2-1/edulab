@@ -43,5 +43,12 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 					  
 					  $this->update($data, $where);
 	}
+	public function deleteProject($project_id)
+	{
+					  
+		$where = "project_id = ".$project_id;
+					  
+					  $this->delete($where);
+	}
 }
 ?>
