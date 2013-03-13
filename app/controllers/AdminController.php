@@ -96,6 +96,9 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addproject();
 		$projects = new Edulab_Model_Project();
+		$this->view->customer = new Edulab_Model_Customer();
+		$this->view->projects = $projects;
+		$this->view->mode = $mode;
 		
 		if($mode == "new")
 		{
@@ -155,7 +158,6 @@ class AdminController extends Zend_Controller_Action
 			$delete->deleteProject($project_id);
 			$this->_redirect('admin');
 		}
-		
 	}
 	
 	public function partAction()
