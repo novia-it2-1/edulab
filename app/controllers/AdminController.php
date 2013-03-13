@@ -169,11 +169,11 @@ class AdminController extends Zend_Controller_Action
 		{
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/part/mode/save');
+			$form->removeElement('status');
 			$request = $this->getRequest();
 			$project_id = $request->getParam('project_id');
 			$data = array('project_id' => $project_id);
 			$form->populate((array) $data);
-			$form->status->setValue(0);
 			$this->view->form=$form;
 			if($this->getRequest()->isPost())
 			{
@@ -250,10 +250,10 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$name = $form->getValue('name');
-				$resources = new Edulab_Model_Resource();
-				$resources->addResources($name);
-				$this->_redirect('admin/resource/mode/new');
+					$name = $form->getValue('name');
+					$resources = new Edulab_Model_Resource();
+					$resources->addResources($name);
+					$this->_redirect('admin/resource/mode/new');
 				}
 			}
 		}
@@ -303,15 +303,15 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$customer_id = $form->getValue('customer_id');
-				$fullname = $form->getValue('fullname');
-				$unit = $form->getValue('unit');
-				$phone = $form->getValue('phone');
-				$mail = $form->getValue('mail');
-				$gender = $form->getValue('gender');
-				
-				$customers->updateCustomers($customer_id,$fullname,$unit,$phone,$mail,$gender);
-				$this->_redirect('admin/customer');
+					$customer_id = $form->getValue('customer_id');
+					$fullname = $form->getValue('fullname');
+					$unit = $form->getValue('unit');
+					$phone = $form->getValue('phone');
+					$mail = $form->getValue('mail');
+					$gender = $form->getValue('gender');
+					
+					$customers->updateCustomers($customer_id,$fullname,$unit,$phone,$mail,$gender);
+					$this->_redirect('admin/customer');
 				}
 			}
 			$this->view->form=$form;
@@ -344,11 +344,11 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$part_id = $form->getValue('part_id');
-				$resource_id = $form->getValue('resource_id');
-				$date = $form->getValue('date');
-				$resourcedates->addResourcedates($part_id,$resource_id,$date);
-				$this->_redirect('admin/resourcedate/mode/new/part_id/' . $part_id);
+					$part_id = $form->getValue('part_id');
+					$resource_id = $form->getValue('resource_id');
+					$date = $form->getValue('date');
+					$resourcedates->addResourcedates($part_id,$resource_id,$date);
+					$this->_redirect('admin/resourcedate/mode/new/part_id/' . $part_id);
 				}
 			}
 			$this->view->form=$form;
@@ -365,12 +365,18 @@ class AdminController extends Zend_Controller_Action
 	
 	public function projectcustomerAction()
 	{
+		$MainCustomer = new Edulab_Model_Customer();
 		$form = new Edulab_Form_Addprojectcustomer();
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
 		$project_id = $request->getParam('project_id');
 		if($mode == "new")
 		{
+				$checkMain = $MainCustomer->getMainCustomer($project_id);
+				if($checkMain == true)
+				{
+					$form->removeElement('is_main_customer');
+				}
 			$data = array('project_id' => $project_id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
@@ -379,12 +385,12 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$project_id = $form->getValue('project_id');
-				$customer_id = $form->getValue('customer_id');
-				$is_main_customer = $form->getValue('is_main_customer');
-				$projectcustomer = new Edulab_Model_Projectcustomer();
-				$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
-				$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
+					$project_id = $form->getValue('project_id');
+					$customer_id = $form->getValue('customer_id');
+					$is_main_customer = $form->getValue('is_main_customer');
+					$projectcustomer = new Edulab_Model_Projectcustomer();
+					$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
+					$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
 				}
 			}
 		}

@@ -37,7 +37,7 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 			$select->where('project_id = ?', $project_id);
 		}
 		else
-		{
+				{
 			$select->order('c.fullname','ASC');
 		}
 		return $this->fetchAll($select);		
