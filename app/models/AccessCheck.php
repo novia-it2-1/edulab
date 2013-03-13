@@ -16,7 +16,15 @@ class Edulab_Model_AccessCheck extends Zend_Controller_Plugin_Abstract
 		$action = $request->getActionName();
 		
 		$id = $this->_auth->getStorage()->read();
-		$role = $id->role;
+		
+		if(is_object($id))
+		{
+			$role = $id->role;
+		}
+		else
+		{
+			$role = 'user';
+		}
 		
 		if(!$this->_acl->isAllowed($role, $resource, $action))
 		{

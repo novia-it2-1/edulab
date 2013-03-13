@@ -9,23 +9,18 @@ class AdminController extends Zend_Controller_Action
 		$this->view->headTitle('Edulab - Admin');
 	}
 
-	// admin/index
 	public function indexAction()
 	{
 		$projects = new Edulab_Model_Project();
 		$this->view->projects = $projects;
 		$this->view->customer = new Edulab_Model_Customer();
 	}
-		
-	//
-	// experiment
-	// // // // // // // // // // // // // // // // // // // // // // 
+	
 	public function loginAction()
 	{
 		if(Zend_Auth::getInstance()->hasIdentity())
 		{
-			// temporary redirect
-			$this->_redirect('index/index');
+			$this->_redirect('admin');
 		}
 		
 		$request = $this->getRequest();
@@ -54,8 +49,7 @@ class AdminController extends Zend_Controller_Action
 					$authStorage = $auth->getStorage();
 					$authStorage->write($id);
 					
-					// temporary redirect
-					$this->_redirect('index/index');
+					$this->_redirect('admin');
 				}
 				else
 				{
@@ -70,9 +64,8 @@ class AdminController extends Zend_Controller_Action
 	public function logoutAction()
 	{
 		Zend_Auth::getInstance()->clearIdentity();
-		
-		// temporary redirection
-		$this->_redirect('index/index');
+				
+		$this->_redirect('admin');
 	}
 	
 	private function getAuthAdapter()
@@ -84,10 +77,7 @@ class AdminController extends Zend_Controller_Action
 					->setCredentialColumn('password');
 					
 		return $authAdapter;
-	}	
-	// // // // // // // // // // // // // // // // // // // // // // 
-	// experiment
-	//
+	}
 	
 	public function projectAction()
 	{
