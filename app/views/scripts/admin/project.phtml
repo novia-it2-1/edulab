@@ -1,57 +1,128 @@
 <div class="page-title">
-	<h2>Project Management - <?php echo $this->page_title; ?></h2>
+	<h2><?php echo $this->page_title; ?></h2>
 </div>
+<?php if(isset($this->mode)): ?>
 <div id="columns">
 	<div class="column">
 		<div class="sub-title">
-			<h3>General Information</h2>
+			<h3>General Information</h3>
+			<?php if($this->mode != 'new'): ?>
+				<a class="button" href="<?php echo ROOT; ?>admin/sendmail/project_id/<?php echo $this->project->project_id; ?>">Send status mail</a>
+			<?php endif; ?>
 		</div>
 		<?php echo $this->form; ?>
 	</div>
 	<div class="column">
-		<div class="sub-title">
-			<h3>Project Parts</h2>
-		</div>
-		<?php if(isset($this->parts)): ?>
-		<script type="text/javascript">
-		
-		function goto(loc, part_name){
-			if(confirm('Are you sure you want to delete "' + part_name + '"')){
-				window.location.href = loc;
-			}
-		}
-			
-		</script>
 		<div class="parts">
-		<?php foreach($this->parts as $part): ?>
-			<div class="part">
-				<div class="info">
-					<h4><?php echo $part->title; ?></h4>
-				</div>
-				<div class="status">
-					<a <?php if($part->status == 1){ echo 'class="active"'; } ?> href="#">Not Started</a>
-					<a <?php if($part->status == 2){ echo 'class="active"'; } ?> href="#">In Progress</a>
-					<a <?php if($part->status == 3){ echo 'class="active"'; } ?> href="#">Finalizing</a>
-					<a <?php if($part->status == 4){ echo 'class="active"'; } ?> href="#">Completed</a>
-				</div>
-				<div class="comment">
-					<?php echo substr($part->comment, 0, 230); ?><?php if(strlen($part->comment) > 230){ echo '...'; } ?>
-					<div class="actions">
-						<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/mode/delete/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
-						<a class="edit" href="<?php echo ROOT; ?>admin/part/mode/edit/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>">Edit</a>
-					</div>
-				</div>
+			<div class="sub-title">
+				<h3>Project Parts</h3>
+				<?php if($this->mode != 'new'): ?>
+					<a class="button new" href="<?php echo ROOT; ?>admin/part/mode/new/project_id/<?php echo $this->project->project_id; ?>"><b>+</b> Add Part</a>
+				<?php endif; ?>
 			</div>
-		<?php endforeach; ?>
+			<?php if(isset($this->parts) && count($this->parts)): ?>
+				<script type="text/javascript">
+				
+				function goto(loc, part_name){
+					if(confirm('Are you sure you want to delete "' + part_name + '"')){
+						window.location.href = loc;
+					}
+				}
+					
+				</script>
+				<?php foreach($this->parts as $part): ?>
+					<div class="part">
+						<div class="info">
+							<h4><?php echo $part->title; ?></h4>
+						</div>
+						<div class="status">
+							<a <?php if($part->status == 0){ echo 'class="active"'; } ?> href="#">Not Started</a>
+							<a <?php if($part->status == 1){ echo 'class="active"'; } ?> href="#">In Progress</a>
+							<a <?php if($part->status == 2){ echo 'class="active"'; } ?> href="#">Finalizing</a>
+							<a <?php if($part->status == 3){ echo 'class="active"'; } ?> href="#">Completed</a>
+						</div>
+						<div class="comment">
+							<?php echo substr($part->comment, 0, 230); ?><?php if(strlen($part->comment) > 230){ echo '...'; } ?>
+							<div class="actions">
+								<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/mode/delete/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
+								<a class="edit" href="<?php echo ROOT; ?>admin/part/mode/edit/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>">Edit</a>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			<?php elseif($this->mode == 'new'): ?>
+				<div class="notice">
+					You must save the project before you can add parts!
+				</div>
+			<?php else: ?>
+				<div class="notice">
+					No parts added to the project yet!
+				</div>
+			<?php endif; ?>
 		</div>
-		<?php endif; ?>
 		<div class="sub-title">
-			<h3>Contact Persons</h2>
+			<h3>Project Customers</h2>
+			<?php if($this->mode != 'new'): ?>
+				<a class="button new" href="<?php echo ROOT; ?>admin/projectcustomer/mode/new/project_id/<?php echo $this->project->project_id; ?>"><b>+</b> Add Customer</a>
+			<?php endif; ?>
 		</div>
-		<?php if(isset($this->parts)): ?>
-		<?php foreach($this->parts as $part): ?>
-			asd
-		<?php endforeach; ?>
+		<?php if(isset($this->customers) && count($this->customers)): ?>
+			
+		<?php elseif($this->mode == 'new'): ?>
+		<div class="notice">
+			You must save the project before you can add customers!
+		</div>
+		<?php else: ?>
+		<div class="notice">
+			No customers added to the project yet!
+		</div>
 		<?php endif; ?>
 	</div>
 </div>
+<?php else: ?>
+<div class="sub-title">
+	<h3>Active Projects</h3>
+	<a class="button new" href="<?php echo ROOT; ?>admin/project/mode/new"><b>+</b> Add Project</a>
+</div>
+<?php foreach($this->projects->getProjects() as $project): ?>
+<?php
+$parts = $this->projects->getParts($project->project_id);
+$tot = count($parts);
+$count = 0;
+$percentage = 0;
+foreach($parts as $part){ 
+	if($part->status == '3'){ $count++; } 
+	$percentage += 100 / $tot / 3 * $part->status;
+}
+?>
+<div class="project">
+	<div class="info">
+		<a href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $project->project_id; ?>"><h3><?php echo $project->title; ?></h3></a>
+		<span><?php echo $project->programmecode; ?></span>
+		<span>
+			<?php
+			
+			$mainCustomer = $this->customer->getMainCustomer($project->project_id);
+			if($mainCustomer){ echo $mainCustomer->fullname; }
+			?>
+		</span>
+	</div>
+	<div class="stats">
+		<div class="parts"><b><?php echo $count; ?></b> out of <b><?php echo $tot; ?></b> parts done</div>
+		<div class="deadline"><b>12</b> days to deadline</div>
+	</div>
+	<div class="progress not-started">
+		<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, 1, '.', ''); } ?>">
+			<div class="finalizing" style="opacity:<?php if($percentage > 66){ echo '1.0'; }elseif($percentage > 33){ echo number_format(($percentage - 33) / 33, 1, '.', ''); }else{ echo '0'; } ?>">
+				<div class="complete" style="opacity:<?php if($percentage > 99){ echo '1.0'; }elseif($percentage > 66){ echo number_format(($percentage - 66) / 33, 1, '.', ''); }else{ echo '0'; } ?>">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+		<div class="percentage">
+			<?php echo round($percentage); ?>%
+		</div>
+	</div>
+</div>
+<?php endforeach; ?>
+<?php endif; ?>

@@ -1,11 +1,14 @@
 <div class="page-title">
-	<h2>Part Management - <?php echo $this->page_title; ?></h2>
+	<h2><?php echo $this->page_title; ?></h2>
 </div>
 <div id="columns">
 	<div class="column">
+		<div class="sub-title">
+			<h3>General Information</h3><a class="button new" href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $this->project_id; ?>">Go back to Project</a>
+		</div>
 		<?php echo $this->form; ?>
 	</div>
 	<div class="column">
-		<a href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $this->project_id; ?>">Go back to project</a>
+		
 	</div>
 </div>
