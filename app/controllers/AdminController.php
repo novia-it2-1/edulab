@@ -159,8 +159,6 @@ class AdminController extends Zend_Controller_Action
 		
 		if($mode == "new")
 		{
-			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/part/mode/save');
 			$form->removeElement('status');
 			$request = $this->getRequest();
 			$project_id = $request->getParam('project_id');
@@ -364,11 +362,12 @@ class AdminController extends Zend_Controller_Action
 		$project_id = $request->getParam('project_id');
 		if($mode == "new")
 		{
-				$checkMain = $MainCustomer->getMainCustomer($project_id);
-				if($checkMain == true)
-				{
-					$form->removeElement('is_main_customer');
-				}
+			$checkMain = $MainCustomer->getMainCustomer($project_id);
+			if($checkMain == true)
+			{
+				$form->removeElement('is_main_customer');
+				$is_main_customer = 0;
+			}
 			$data = array('project_id' => $project_id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
@@ -379,7 +378,10 @@ class AdminController extends Zend_Controller_Action
 				{
 					$project_id = $form->getValue('project_id');
 					$customer_id = $form->getValue('customer_id');
+					if($checkMain != true)
+					{
 					$is_main_customer = $form->getValue('is_main_customer');
+					}
 					$projectcustomer = new Edulab_Model_Projectcustomer();
 					$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
 					$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
