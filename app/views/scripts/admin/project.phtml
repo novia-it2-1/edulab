@@ -7,7 +7,7 @@
 		<div class="sub-title">
 			<h3>General Information</h3>
 			<?php if($this->mode != 'new'): ?>
-				<a class="button" href="<?php echo ROOT; ?>admin/sendmail/project_id/<?php echo $this->project->project_id; ?>">Send status mail</a>
+				<a class="button" href="<?php echo ROOT; ?>admin/mail/send/<?php echo $this->project->project_id; ?>">Send status mail</a>
 			<?php endif; ?>
 		</div>
 		<?php echo $this->form; ?>
@@ -17,7 +17,7 @@
 			<div class="sub-title">
 				<h3>Project Parts</h3>
 				<?php if($this->mode != 'new'): ?>
-					<a class="button new" href="<?php echo ROOT; ?>admin/part/mode/new/project_id/<?php echo $this->project->project_id; ?>"><b>+</b> Add Part</a>
+					<a class="button new" href="<?php echo ROOT; ?>admin/part/new/<?php echo $this->project->project_id; ?>"><b>+</b> Add Part</a>
 				<?php endif; ?>
 			</div>
 			<?php if(isset($this->parts) && count($this->parts)): ?>
@@ -44,8 +44,8 @@
 						<div class="comment">
 							<?php echo substr($part->comment, 0, 230); ?><?php if(strlen($part->comment) > 230){ echo '...'; } ?>
 							<div class="actions">
-								<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/mode/delete/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
-								<a class="edit" href="<?php echo ROOT; ?>admin/part/mode/edit/project_id/<?php echo $this->project->project_id; ?>/part_id/<?php echo $part->part_id; ?>">Edit</a>
+								<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/delete/<?php echo $this->project->project_id; ?>/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
+								<a class="edit" href="<?php echo ROOT; ?>admin/part/edit/<?php echo $this->project->project_id; ?>/<?php echo $part->part_id; ?>">Edit</a>
 							</div>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 		<div class="sub-title">
 			<h3>Project Customers</h2>
 			<?php if($this->mode != 'new'): ?>
-				<a class="button new" href="<?php echo ROOT; ?>admin/projectcustomer/mode/new/project_id/<?php echo $this->project->project_id; ?>"><b>+</b> Add Customer</a>
+				<a class="button new" href="<?php echo ROOT; ?>admin/projectcustomer/new/<?php echo $this->project->project_id; ?>"><b>+</b> Add Customer</a>
 			<?php endif; ?>
 		</div>
 		<?php if(isset($this->customers) && count($this->customers)): ?>
@@ -82,7 +82,7 @@
 <?php else: ?>
 <div class="sub-title">
 	<h3>Active Projects</h3>
-	<a class="button new" href="<?php echo ROOT; ?>admin/project/mode/new"><b>+</b> Add Project</a>
+	<a class="button new" href="<?php echo ROOT; ?>admin/project/new"><b>+</b> Add Project</a>
 </div>
 <?php foreach($this->projects->getProjects() as $project): ?>
 <?php
@@ -97,7 +97,7 @@ foreach($parts as $part){
 ?>
 <div class="project">
 	<div class="info">
-		<a href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $project->project_id; ?>"><h3><?php echo $project->title; ?></h3></a>
+		<a href="<?php echo ROOT; ?>admin/project/edit/<?php echo $project->project_id; ?>"><h3><?php echo $project->title; ?></h3></a>
 		<span><?php echo $project->programmecode; ?></span>
 		<span>
 			<?php

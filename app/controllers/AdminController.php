@@ -94,7 +94,8 @@ class AdminController extends Zend_Controller_Action
 		{
 			$this->view->page_title = 'New Project';
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/project/mode/new');
+			$form->setAction($baseUrl . '/admin/project/new');
+			$this->view->page_title = 'New Project';
 			$this->view->form=$form;
 			
 			if($this->getRequest()->isPost())
@@ -117,8 +118,8 @@ class AdminController extends Zend_Controller_Action
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/project/mode/edit/project_id/' . $id);
-			$this->view->page_title = 'Edit Project #' . $id;
+			$form->setAction($baseUrl . '/admin/project/edit/' . $id);
+			$this->view->page_title = 'Edit Project <span>#' . $id . '</span>';
 			$project = $projects->getProjects($id,0);
 			$data = $project->toArray();
 			$form->populate((array) $data);
@@ -127,13 +128,13 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$project_id = $form->getValue('project_id');
-				$title = $form->getValue('title');
-				$description = $form->getValue('description');
-				$programmecode = $form->getValue('programmecode');
+					$id = $form->getValue('project_id');
+					$title = $form->getValue('title');
+					$description = $form->getValue('description');
+					$programmecode = $form->getValue('programmecode');
 				
-				$projects->updateProjects($project_id,$title,$description,$programmecode);
-				$this->_redirect('admin/project/mode/edit/id/' .$project_id);
+					$projects->updateProjects($id,$title,$description,$programmecode);
+					$this->_redirect('admin/project/edit/' . $id);
 				}
 			}
 			$this->view->form = $form;
@@ -144,8 +145,8 @@ class AdminController extends Zend_Controller_Action
 		{
 			$delete = new Edulab_Model_Project();
 			$request = $this->getRequest();
-			$project_id = $request->getParam('project_id');
-			$delete->deleteProject($project_id);
+			$id = $request->getParam('id');
+			$delete->deleteProject($id);
 			$this->_redirect('admin');
 		}
 	}
@@ -161,8 +162,9 @@ class AdminController extends Zend_Controller_Action
 		{
 			$form->removeElement('status');
 			$request = $this->getRequest();
-			$project_id = $request->getParam('project_id');
-			$data = array('project_id' => $project_id);
+			$id = $request->getParam('id');
+			$this->view->page_title = 'New Part for Project <span>#' . $id . '</span>';
+			$data = array('id' => $id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
 			if($this->getRequest()->isPost())
@@ -170,59 +172,60 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$project_id = $form->getValue('project_id');
+				$id = $form->getValue('id');
 				$title = $form->getValue('title');
 				$comment = $form->getValue('comment');
 				$deadline = $form->getValue('deadline');
 				
-				$parts->addParts($project_id,$title,$comment,$deadline);
-				$this->_redirect('admin/project/mode/edit/id/' .$project_id);
+				$parts->addParts($id,$title,$comment,$deadline);
+				$this->_redirect('admin/project/edit/' .$id);
 				}
 			}
 		}
 		elseif($mode == "edit")
 		{
 			$request = $this->getRequest();
-			$project_id = $request->getParam('project_id');
-			$part_id = $request->getParam('part_id');
+			$id = $request->getParam('id');
+			$child_id = $request->getParam('child_id');
 			
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/part/mode/edit/project_id/' . $project_id . '/part_id/' . $part_id);
+			$form->setAction($baseUrl . '/admin/part/edit/' . $id . '/' . $child_id);
 			
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$part_id = $form->getValue('part_id');
-				$title = $form->getValue('title');
-				$comment = $form->getValue('comment');
-				$deadline = $form->getValue('deadline');
-				$status = $form->getValue('status');
+					$part_id = $form->getValue('part_id');
+					$title = $form->getValue('title');
+					$comment = $form->getValue('comment');
+					$deadline = $form->getValue('deadline');
+					$status = $form->getValue('status');
 				
-				$parts->updateParts($part_id,$title,$comment,$deadline,$status);
-				$this->_redirect('admin/project/mode/edit/id/' . $project_id);
+					$parts->updateParts($part_id,$title,$comment,$deadline,$status);
+					$this->_redirect('admin/project/edit/' . $id);
 				}
 			}
 			else
 			{
-				$data = $parts->getPart($part_id)->toArray();
+				$data = $parts->getPart($child_id)->toArray();
 				$form->populate((array) $data);
 			}
 			
-			$this->view->page_title = 'Edit part #' . $part_id;
-			$this->view->form=$form;
-			$this->view->project_id = $project_id;
+			$this->view->page_title = 'Edit Part <span>#' . $child_id . '</span> for Project <span>#' . $id . '</span>';
 		}
 		elseif($mode == "delete")
 		{
 			$delete = new Edulab_Model_Part();
 			$request = $this->getRequest();
-			$project_id = $request->getParam('project_id');
-			$part_id = $request->getParam('part_id');
-			$delete->deletePart($part_id);
-			$this->_redirect('admin/project/mode/edit/id/' .$project_id);
+			$id = $request->getParam('id');
+			$child_id = $request->getParam('child_id');
+			$delete->deletePart($child_id);
+			$this->_redirect('admin/project/edit/' . $id);
 		}
+		
+		$this->view->id = $id;
+		$this->view->form = $form;
 	}
 	
 	
@@ -326,19 +329,19 @@ class AdminController extends Zend_Controller_Action
 		if($mode == "new")
 		{
 			$request = $this->getRequest();
-			$part_id = $request->getParam('part_id');
-			$data = array('part_id' => $part_id);
+			$child_id = $request->getParam('child_id');
+			$data = array('child_id' => $child_id);
 			$form->populate((array) $data);
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-					$part_id = $form->getValue('part_id');
+					$child_id = $form->getValue('child_id');
 					$resource_id = $form->getValue('resource_id');
 					$date = $form->getValue('date');
-					$resourcedates->addResourcedates($part_id,$resource_id,$date);
-					$this->_redirect('admin/resourcedate/mode/new/part_id/' . $part_id);
+					$resourcedates->addResourcedates($child_id,$resource_id,$date);
+					$this->_redirect('admin/resourcedate/mode/new/child_id/' . $child_id);
 				}
 			}
 			$this->view->form=$form;
@@ -349,7 +352,7 @@ class AdminController extends Zend_Controller_Action
 			$request = $this->getRequest();
 			$resource_id = $request->getParam('resource_id');
 			$delete->deleteResourcedate($resource_id);
-			$this->_redirect('admin/resourcedate	');
+			$this->_redirect('admin/resourcedate');
 		}
 	}
 	
@@ -359,16 +362,17 @@ class AdminController extends Zend_Controller_Action
 		$form = new Edulab_Form_Addprojectcustomer();
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
-		$project_id = $request->getParam('project_id');
+		$id = $request->getParam('id');
+		$this->view->id = $id;
 		if($mode == "new")
 		{
-			$checkMain = $MainCustomer->getMainCustomer($project_id);
+			$checkMain = $MainCustomer->getMainCustomer($id);
 			if($checkMain == true)
 			{
 				$form->removeElement('is_main_customer');
 				$is_main_customer = 0;
 			}
-			$data = array('project_id' => $project_id);
+			$data = array('id' => $id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
 			if($this->getRequest()->isPost())
@@ -376,15 +380,15 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-					$project_id = $form->getValue('project_id');
+					$id = $form->getValue('id');
 					$customer_id = $form->getValue('customer_id');
 					if($checkMain != true)
 					{
 					$is_main_customer = $form->getValue('is_main_customer');
 					}
 					$projectcustomer = new Edulab_Model_Projectcustomer();
-					$projectcustomer->addProjectcustomer($project_id,$customer_id,$is_main_customer);
-					$this->_redirect('admin/projectcustomer/mode/new/project_id/' . $project_id);
+					$projectcustomer->addProjectcustomer($id,$customer_id,$is_main_customer);
+					$this->_redirect('admin/projectcustomer/new/' . $id);
 				}
 			}
 		}
@@ -394,7 +398,7 @@ class AdminController extends Zend_Controller_Action
 			$request = $this->getRequest();
 			$customer_id = $request->getParam('customer_id');
 			$delete->deleteProjectcustomer($customer_id);
-			$this->_redirect('admin/project/mode/edit/id/' . $project_id);
+			$this->_redirect('admin/project/edit/' . $id);
 		}
 	}
 }

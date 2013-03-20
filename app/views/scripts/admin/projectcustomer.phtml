@@ -1,10 +1,10 @@
 <div class="page-title">
-	<h2>Add Customer for Project <span>#<?php echo $this->project_id; ?></span></h2>
+	<h2>Add Customer for Project <span>#<?php echo $this->id; ?></span></h2>
 </div>
 <div id="columns">
 	<div class="column">
 		<div class="sub-title">
-			<h3>Customer Information</h3><a class="button new" href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $this->project_id; ?>">Go back to Project</a>
+			<h3>Customer Information</h3><a class="button new" href="<?php echo ROOT; ?>admin/project/edit/<?php echo $this->id; ?>">Go back to Project</a>
 		</div>
 		<?php echo $this->form; ?>
 	</div>

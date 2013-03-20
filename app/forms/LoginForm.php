@@ -20,7 +20,7 @@ class Edulab_Form_LoginForm extends Zend_Form
 		
 		$this->addElements(array($username, $password, $login));
 		$this->setMethod('post');
-		$this->setAction('/edulab/www/admin/login');
+		$this->setAction(ROOT . 'admin/login');
 	}
 }
 ?>

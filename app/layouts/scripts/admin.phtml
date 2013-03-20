@@ -1,3 +1,4 @@
+<?php $login = false; if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() == "login"){ $login = true; } ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html>
 <head>
@@ -10,7 +11,8 @@
 </head>
 <body id="admin" class="tundra">
  
-<div id="wrapper">
+<div id="wrapper"<?php if($login){ echo ' class="login"'; } ?>>
+	<?php if(!$login): ?>
 	<div id="header">
 		<div id="hleft">
 			<a class="link" id="link-home" href="<?php echo ROOT; ?>admin">Home</a>
@@ -19,16 +21,19 @@
 			<a class="link" id="link-resource" href="<?php echo ROOT; ?>admin/resource">Resources</a>
 		</div>
 		<div id="hright">
-			<a class="link" id="link-logout" href="">Log out</a>
+			<a class="link" id="link-logout" href="<?php echo ROOT; ?>admin/logout">Log out</a>
 		</div>
 	</div>
+	<?php endif; ?>
 	<div id="content">
 		<?php  echo $this->layout()->content ?>
 		<div class="clear"></div>
 	</div>
+	<?php if(!$login): ?>
 	<div id="footer">
 		&copy; Copyright 2013 - The ITs
 	</div>
+	<?php endif; ?>
 </div>
 
 
