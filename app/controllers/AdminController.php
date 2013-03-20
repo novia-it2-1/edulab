@@ -246,7 +246,7 @@ class AdminController extends Zend_Controller_Action
 					$name = $form->getValue('name');
 					$resources = new Edulab_Model_Resource();
 					$resources->addResources($name);
-					$this->_redirect('admin/resource/mode/new');
+					$this->_redirect('admin/resource/new');
 				}
 			}
 		}
@@ -279,7 +279,7 @@ class AdminController extends Zend_Controller_Action
 				$mail = $form->getValue('mail');
 				$gender = $form->getValue('gender');
 				$customers->addCustomers($fullname,$unit,$phone,$mail,$gender);
-				$this->_redirect('admin/customer/mode/new');
+				$this->_redirect('admin/customer/new');
 				}
 			}
 		}
@@ -290,7 +290,7 @@ class AdminController extends Zend_Controller_Action
 			$data = $customers->getCustomer($customer_id)->toArray();
 			$form->populate((array) $data);
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-			$form->setAction($baseUrl . '/admin/customer/mode/edit/customer_id/' . $customer_id);
+			$form->setAction($baseUrl . '/admin/customer/edit/' . $customer_id);
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
@@ -329,19 +329,19 @@ class AdminController extends Zend_Controller_Action
 		if($mode == "new")
 		{
 			$request = $this->getRequest();
-			$child_id = $request->getParam('child_id');
-			$data = array('child_id' => $child_id);
+			$id = $request->getParam('id');
+			$data = array('part_id' => $id);
 			$form->populate((array) $data);
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-					$child_id = $form->getValue('child_id');
+					$child_id = $form->getValue('part_id');
 					$resource_id = $form->getValue('resource_id');
 					$date = $form->getValue('date');
 					$resourcedates->addResourcedates($child_id,$resource_id,$date);
-					$this->_redirect('admin/resourcedate/mode/new/child_id/' . $child_id);
+					$this->_redirect('admin/resourcedate/new/' . $child_id);
 				}
 			}
 			$this->view->form=$form;
@@ -402,30 +402,4 @@ class AdminController extends Zend_Controller_Action
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
