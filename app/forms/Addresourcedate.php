@@ -20,8 +20,11 @@ public function init()
 		
 		/*
         $date = new Zend_Dojo_Form_Element_DateTextBox('date');
-        */
 		$date = new ZendX_JQuery_Form_Element_Datepicker('date');
+		$date->setLabel('Date:');
+		*/
+		
+		$date = $this->createElement('text', 'date');
 		$date->setLabel('Date:');
 						
 		$submit = new Zend_Form_Element_Submit('submit');

@@ -7,7 +7,13 @@
 	<?php echo $this->headTitle(); ?>
 	<?php echo $this->loadSkin($this->skin); ?>
 	<?php echo $this->headLink(); ?>
-	<?php echo $this->jQuery();?>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	 <script>
+	$(function(){
+		$("#date").datepicker();
+	});
+	</script>
 </head>
 <body id="admin" class="tundra">
  

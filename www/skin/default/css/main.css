@@ -83,8 +83,8 @@ form { margin:0px; padding:0px; }
 */
 
 .zend_form { margin:0; }
-.zend_form dt { background-color:#dfdfdf; padding:16px 20px 0; }
-.zend_form dd { background-color:#dfdfdf; padding:0 16px 20px; margin:0 0 10px; }
+.zend_form dt { background-color:#dfdfdf; padding:16px 20px 0; position:relative; }
+.zend_form dd { background-color:#dfdfdf; padding:0 16px 20px; margin:0 0 10px; position:relative; }
 dt#submit-label { background:none; padding:0; margin:0; height:1px; }
 dd#submit-element { float:right; padding:16px 20px; }
 dd input{ width:98%; }
@@ -211,3 +211,12 @@ ul.errors li{
 .part .comment .actions a.delete { float:right; background-color:#e87474; display:block; color:#5e1414; font-size:12px; font-weight:bold; padding:6px 10px; margin-left:4px; text-align:center; border-radius:2px; }
 .part .comment .actions a.edit:hover { background-color:#fff; color:#2a4312; }
 .part .comment .actions a.delete:hover { background-color:#fff; color:#5e1414; }
+
+
+
+
+
+
+#ui-datepicker-div{
+display:none
+}
