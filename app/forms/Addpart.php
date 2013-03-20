@@ -17,8 +17,9 @@ public function init()
         $comment = $this->createElement('textarea','comment');
         $comment->setLabel('Comment:')
 				->setAttrib('size',50);
-        $deadline = new Zend_Dojo_Form_Element_DateTextBox('deadline');
-        $deadline	->setLabel('Date:');
+		$deadline = $this->createElement('text','deadline');
+		$deadline	->setLabel('Deadline:')
+					->addValidator('date');
 		$status = $this->createElement('radio','status');
         $status	->setLabel('Status:')
 				->addMultiOptions(array(
