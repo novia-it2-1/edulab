@@ -7,15 +7,13 @@ class Edulab_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view = new Zend_View();
 		$view->skin = "default";
 		Zend_Dojo::enableView($view);
+		$view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
 		// Add it to the ViewRenderer
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 		$viewRenderer->setView($view);
 		
 		// Return it, so that it can be stored by the bootstrap
-		return $view;
-		
-		
-	
+		return $view;	
 	}
 	
 	protected function _initAutoload()
@@ -30,7 +28,7 @@ class Edulab_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		$fc = Zend_Controller_Front::getInstance();
 		$fc->registerPlugin(new Edulab_Model_AccessCheck($acl, $auth));
-		
+				
 		// Return it so that it can be stored by the bootstrap
 		return $autoLoader;
 	}
