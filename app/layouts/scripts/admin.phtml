@@ -9,13 +9,25 @@
 	<?php echo $this->headLink(); ?>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-	 <script>
+	<script type="text/javascript">
+	var unavailableDates = ["21-3-2013","22-3-2013"];
+	function unavailable(date){
+		dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+		if($.inArray(dmy, unavailableDates) == -1){
+			return [true, ""];
+		}else{
+			return [false, "", "Unavailable"];
+		}
+	}
 	$(function(){
-		$("#date").datepicker();
+		$("#date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			beforeShowDay: unavailable
+		});
 	});
 	</script>
 </head>
-<body id="admin" class="tundra">
+<body id="admin">
  
 <div id="wrapper"<?php if($login){ echo ' class="login"'; } ?>>
 	<?php if(!$login): ?>
@@ -41,7 +53,6 @@
 	</div>
 	<?php endif; ?>
 </div>
-
 
 </body>
 </html>
