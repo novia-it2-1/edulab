@@ -18,10 +18,12 @@ public function init()
 		$resources->addMultiOption($r->resource_id, $r->name);
 		}
 		
-		
+		/*
         $date = new Zend_Dojo_Form_Element_DateTextBox('date');
-        $date->setLabel('Date:');
-		
+        */
+		$date = new ZendX_JQuery_Form_Element_Datepicker('date');
+		$date->setLabel('Date:');
+						
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('Save	');
 

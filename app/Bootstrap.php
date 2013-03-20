@@ -8,9 +8,15 @@ class Edulab_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->skin = "default";
 		Zend_Dojo::enableView($view);
 		$view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
+		/*
 		// Add it to the ViewRenderer
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 		$viewRenderer->setView($view);
+		*/
+		
+		$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+		$viewRenderer->setView($view);
+		Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 		
 		// Return it, so that it can be stored by the bootstrap
 		return $view;	
