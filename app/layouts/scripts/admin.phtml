@@ -14,30 +14,41 @@
 	$(document).ready(function(){
 		$('#resource_id').prop('selectedIndex',-1);
 	});
+	
+	var unavailableDates;
 	function getId()
 	{
-		
+		$("#ui-datepicker-div").remove();
+	
 		var e = document.getElementById("resource_id");
 		var a = e.options[e.selectedIndex].value;
 		$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
 		function(data)
 		{
-			unavailableDates = data;
+			unavailableDates = new Array();
+			for(var i = 0; i < data.length; i++) {
+				unavailableDates[i] = data[i].date;
+			}
+		}, "json");
+		
+		$("#date").datepicker({
+			dateFormat: 'yy-mm-dd',
+			beforeShowDay: unavailable
 		});
-		unavailable();
 	}
-	var unavailableDates;
+	
 	function unavailable(date){
-		dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+		dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 		if($.inArray(dmy, unavailableDates) == -1){
 			return [true, ""];
 		}else{
 			return [false, "", "Unavailable"];
 		}
 	}
+	
 	$(function(){
 		$("#date").datepicker({
-			dateFormat: 'yy-mm-dd',
+			dateFormat: 'yyyy-mm-dd',
 			beforeShowDay: unavailable
 		});
 	});
