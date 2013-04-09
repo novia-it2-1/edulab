@@ -24,7 +24,10 @@
 		{
 			unavailableDates = data;
 		});
-		function unavailable(date){
+		unavailable();
+	}
+	var unavailableDates;
+	function unavailable(date){
 		dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 		if($.inArray(dmy, unavailableDates) == -1){
 			return [true, ""];
@@ -32,9 +35,6 @@
 			return [false, "", "Unavailable"];
 		}
 	}
-	}
-	var unavailableDates;
-	
 	$(function(){
 		$("#date").datepicker({
 			dateFormat: 'yy-mm-dd',
