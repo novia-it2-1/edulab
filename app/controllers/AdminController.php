@@ -336,11 +336,11 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-					$child_id = $form->getValue('part_id');
+					$part_id = $form->getValue('part_id');
 					$resource_id = $form->getValue('resource_id');
 					$date = $form->getValue('date');
-					$resourcedates->addResourcedates($child_id,$resource_id,$date);
-					$this->_redirect('admin/resourcedate/new/' . $child_id);
+					$resourcedates->addResourcedates($part_id,$resource_id,$date);
+					$this->_redirect('admin/resourcedate/new/' . $id);
 				}
 			}
 			$this->view->form=$form;

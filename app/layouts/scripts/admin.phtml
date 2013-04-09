@@ -14,12 +14,11 @@
 	$(document).ready(function(){
 		$('#resource_id').prop('selectedIndex',-1);
 	});
+
 	
-	var unavailableDates;
 	function getId()
 	{
-		$("#ui-datepicker-div").remove();
-	
+		var unavailableDates;
 		var e = document.getElementById("resource_id");
 		var a = e.options[e.selectedIndex].value;
 		$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
@@ -27,31 +26,43 @@
 		{
 			unavailableDates = new Array();
 			for(var i = 0; i < data.length; i++) {
-				unavailableDates[i] = data[i].date;
+				 unavailableDates[i] = data[i].date;
 			}
-		}, "json");
-		
-		$("#date").datepicker({
-			dateFormat: 'yy-mm-dd',
-			beforeShowDay: unavailable
-		});
+			$("#ui-datepicker-div").remove();
+			$("#date").datepicker(
+			{
+				dateFormat: 'yy-mm-dd',
+				beforeShowDay: function(date)
+				{
+					
+					dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+					if($.inArray(dmy, unavailableDates) == -1)
+					{
+						return [true, ""];
+					}
+					else
+					{
+						return [false, "Unavailable"];
+					}
+				}
+			});
+			
+			
+		}, "json").fail(function()
+							{
+								$("#ui-datepicker-div").remove();
+								$("#date").datepicker(
+								{
+									dateFormat: 'yy-mm-dd'
+								});
+							});
 	}
 	
-	function unavailable(date){
-		dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-		if($.inArray(dmy, unavailableDates) == -1){
-			return [true, ""];
-		}else{
-			return [false, "", "Unavailable"];
-		}
-	}
-	
-	$(function(){
+	/*$(function(){
 		$("#date").datepicker({
-			dateFormat: 'yyyy-mm-dd',
-			beforeShowDay: unavailable
+			dateFormat: 'yy-mm-dd'
 		});
-	});
+	});*/
 	</script>
 </head>
 <body id="admin">

@@ -6,11 +6,10 @@
 	$id = $_POST['postId'];
 	$select = mysql_query('SELECT date FROM parts_resources_link WHERE resource_id = ' . $id);
 	//$rows = mysql_fetch_assoc($select);
-	$r = array();
+	
 	while($rows = mysql_fetch_assoc($select))
 	{
-		//echo $rows["date"] . ";";
-		$r[]=$rows;
+		$r[] = array("date" => date("Y-n-j",strtotime($rows["date"])));
 	}
 	echo json_encode($r);
 	//$json = json_encode($rows);

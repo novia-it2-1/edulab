@@ -1,2 +1,52 @@
 
-<?php echo $this->form;	?>
+
+	<?php
+	/*<script type="text/javascript">
+	$(document).ready(function(){
+		$('#resource_id').prop('selectedIndex',-1);
+	});
+
+	
+	function getId()
+	{
+		var unavailableDates;
+		var e = document.getElementById("resource_id");
+		var a = e.options[e.selectedIndex].value;
+		$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
+		function(data)
+		{
+			unavailableDates = new Array();
+			for(var i = 0; i < data.length; i++) {
+				 unavailableDates[i] = data[i].date;
+			}
+			console.log(unavailableDates);
+			$("#ui-datepicker-div").remove();
+			$("#date").datepicker({
+			dateFormat: 'yy-mm-dd',
+			beforeShowDay: function(date)
+			{
+				
+				dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+				if($.inArray(dmy, unavailableDates) == -1)
+				{
+					return [true, ""];
+				}
+				else
+				{
+					return [false, "Unavailable"];
+				}
+			}
+			});
+			
+			
+		}, "json");
+		}
+	
+	$(function(){
+		$("#date").datepicker({
+			dateFormat: 'yy-mm-dd'
+		});
+	});
+	</script>*/
+	?>
+	<?php echo $this->form;	?>
