@@ -11,7 +11,8 @@ public function init()
         $part_id = $this->createElement('hidden','part_id');
 		$table = new Edulab_Model_Resource();
 		$resources = new Zend_Form_Element_Select('resource_id');
-		$resources	->setLabel('Resource:')
+		$resources	->setAttrib('onchange', 'getId();')
+					->setLabel('Resource:')
 					->setRequired(true);
 		foreach ($table->getResources() as $r) 
 		{
@@ -25,7 +26,7 @@ public function init()
 		*/
 		
 		$date = $this->createElement('text', 'date');
-		$date->setLabel('Date:');
+		$date	->setLabel('Date:');
 						
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('Save	');

@@ -22,6 +22,7 @@ class Edulab_Model_Resource extends Zend_Db_Table_Abstract
 	public function getResource($resource_id = null)
 	{
 		$select = $this->select();
+		$select->setIntegrityCheck(false);
 		$select->joinRight(array('p' => 'parts_resources_link'),'resource_id = p.resource_id');
 		if(!is_null($resource_id))
 			{

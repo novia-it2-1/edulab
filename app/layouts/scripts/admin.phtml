@@ -9,9 +9,22 @@
 	<?php echo $this->headLink(); ?>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	
 	<script type="text/javascript">
-	var unavailableDates = ["21-3-2013","22-3-2013"];
-	function unavailable(date){
+	$(document).ready(function(){
+		$('#resource_id').prop('selectedIndex',-1);
+	});
+	function getId()
+	{
+		
+		var e = document.getElementById("resource_id");
+		var a = e.options[e.selectedIndex].value;
+		$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
+		function(data)
+		{
+			unavailableDates = data;
+		});
+		function unavailable(date){
 		dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 		if($.inArray(dmy, unavailableDates) == -1){
 			return [true, ""];
@@ -19,9 +32,12 @@
 			return [false, "", "Unavailable"];
 		}
 	}
+	}
+	var unavailableDates;
+	
 	$(function(){
 		$("#date").datepicker({
-			dateFormat: 'dd-mm-yy',
+			dateFormat: 'yy-mm-dd',
 			beforeShowDay: unavailable
 		});
 	});

@@ -325,7 +325,6 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresourcedate();
 		$resourcedates = new Edulab_Model_Partresource();
-		
 		if($mode == "new")
 		{
 			$request = $this->getRequest();
