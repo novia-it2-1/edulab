@@ -14,7 +14,8 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 		return false;
 	}
 	
-	public function getMainCustomer($project_id){
+	public function getMainCustomer($project_id)
+	{
 		$select = $this->select();
 		if(isset($project_id))
 		{
@@ -42,6 +43,7 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 		}
 		return $this->fetchAll($select);		
 	}
+	
 	public function addCustomers($fullname,$unit,$phone,$mail,$gender)
 	{
 		$data = array("fullname"=>$fullname,

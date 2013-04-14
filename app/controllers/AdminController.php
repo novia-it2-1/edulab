@@ -122,9 +122,11 @@ class AdminController extends Zend_Controller_Action
 		{
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
-			$existing = new Edulab_Model_Customer();
-			$customers = $existing->getCustomers($id)->toArray();
+			$existing = new Edulab_Model_Projectcustomer();
+			$customers = $existing->getProjectCustomers($id, 0)->toArray();
+			$maincustomer = $existing->getProjectCustomers($id, 1)->toArray();
 			$this->view->customers = $customers;
+			$this->view->maincustomer = $maincustomer;
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/project/edit/' . $id);
 			$this->view->page_title = 'Edit Project <span>#' . $id . '</span>';
@@ -242,6 +244,7 @@ class AdminController extends Zend_Controller_Action
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresource();
+		echo ("sadad");
 		
 		if($mode == "new")
 		{
@@ -272,6 +275,7 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addcustomer();
 		$customers = new Edulab_Model_Customer();
+		
 						
 		if($mode == "new")
 		{

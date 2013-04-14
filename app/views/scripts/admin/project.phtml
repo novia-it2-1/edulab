@@ -7,7 +7,13 @@
 		<div class="sub-title">
 			<h3>General Information</h3>
 			<?php if($this->mode != 'new'): ?>
-				<a class="button" href="<?php echo ROOT; ?>admin/mail/send/<?php echo $this->project->project_id; ?>">Send status mail</a>
+			<script type="text/javascript">
+					function mailPopUp(url) 
+					{
+						popupWindow = window.open(url,'popUpWindow','height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no, status=yes');
+					}
+					</script>
+				<a class="button" href="<?php echo ROOT; ?>ajax/mailpopup.php" onclick="mailPopUp(this.href)">Send status mail</a>
 			<?php endif; ?>
 		</div>
 		<?php echo $this->form; ?>
@@ -66,7 +72,21 @@
 				<a class="button new" href="<?php echo ROOT; ?>admin/projectcustomer/new/<?php echo $this->project->project_id; ?>"><b>+</b> Add Customer</a>
 			<?php endif; ?>
 		</div>
-		<?php if(isset($this->customers) && count($this->customers)): ?>
+			<?php if(isset($this->maincustomer) && count($this->maincustomer)):
+					foreach($this->maincustomer as $m)
+					{
+						$strm = implode(" | ", $m);
+						echo ($strm . "<b>Main Customer</b></br>");
+					}
+					if(isset($this->customers) && count($this->customers))
+					{ 
+						foreach($this->customers as $c)
+						{
+							$str = implode(" | ", $c);
+							echo ($str . "</br>");
+						}
+					}
+			?>
 		<?php elseif($this->mode == 'new'):?>
 		<div class="notice">
 			You must save the project before you can add customers!
