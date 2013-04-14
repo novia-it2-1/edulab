@@ -10,60 +10,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 	
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('#resource_id').prop('selectedIndex',-1);
-	});
 
-	
-	function getId()
-	{
-		var unavailableDates;
-		var e = document.getElementById("resource_id");
-		var a = e.options[e.selectedIndex].value;
-		$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
-		function(data)
-		{
-			unavailableDates = new Array();
-			for(var i = 0; i < data.length; i++) {
-				 unavailableDates[i] = data[i].date;
-			}
-			$("#ui-datepicker-div").remove();
-			$("#date").datepicker(
-			{
-				dateFormat: 'yy-mm-dd',
-				beforeShowDay: function(date)
-				{
-					
-					dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-					if($.inArray(dmy, unavailableDates) == -1)
-					{
-						return [true, ""];
-					}
-					else
-					{
-						return [false, "Unavailable"];
-					}
-				}
-			});
-			
-			
-		}, "json").fail(function()
-							{
-								$("#ui-datepicker-div").remove();
-								$("#date").datepicker(
-								{
-									dateFormat: 'yy-mm-dd'
-								});
-							});
-	}
-	
-	/*$(function(){
-		$("#date").datepicker({
-			dateFormat: 'yy-mm-dd'
-		});
-	});*/
-	</script>
 </head>
 <body id="admin">
  

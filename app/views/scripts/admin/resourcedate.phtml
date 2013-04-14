@@ -1,7 +1,6 @@
 
 
-	<?php
-	/*<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function(){
 		$('#resource_id').prop('selectedIndex',-1);
 	});
@@ -16,37 +15,43 @@
 		function(data)
 		{
 			unavailableDates = new Array();
-			for(var i = 0; i < data.length; i++) {
+			for(var i = 0; i < data.length; i++) 
+			{
 				 unavailableDates[i] = data[i].date;
 			}
-			console.log(unavailableDates);
-			$("#ui-datepicker-div").remove();
-			$("#date").datepicker({
-			dateFormat: 'yy-mm-dd',
-			beforeShowDay: function(date)
+			$("#date").datepicker("destroy");
+			$("#date").datepicker(
 			{
-				
-				dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-				if($.inArray(dmy, unavailableDates) == -1)
-				{
-					return [true, ""];
+				dateFormat: 'yy-mm-dd',
+				beforeShowDay: function(date)
+				{			
+					dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+					if($.inArray(dmy, unavailableDates) == -1)
+					{
+						return [true, ""];
+					}
+					else
+					{
+						return [false, "Unavailable"];
+					}
 				}
-				else
-				{
-					return [false, "Unavailable"];
-				}
-			}
 			});
 			
 			
-		}, "json");
-		}
+		}, "json").fail(function()
+							{
+								$("#date").datepicker("destroy");
+								$("#date").datepicker(
+								{
+									dateFormat: 'yy-mm-dd'
+								});
+							});
+	}
 	
-	$(function(){
+	/*$(function(){
 		$("#date").datepicker({
 			dateFormat: 'yy-mm-dd'
 		});
-	});
-	</script>*/
-	?>
+	});*/
+	</script>
 	<?php echo $this->form;	?>

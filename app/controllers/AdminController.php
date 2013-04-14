@@ -14,6 +14,11 @@ class AdminController extends Zend_Controller_Action
 		$projects = new Edulab_Model_Project();
 		$this->view->projects = $projects;
 		$this->view->customer = new Edulab_Model_Customer();
+		$ddresource = new Edulab_Form_Addresourcedate();
+		$ddresource ->removeElement('part_id');
+		$ddresource ->removeElement('date');
+		$ddresource ->removeElement('submit');		
+		$this->view->form = $ddresource;
 	}
 	
 	public function loginAction()
@@ -117,6 +122,9 @@ class AdminController extends Zend_Controller_Action
 		{
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
+			$existing = new Edulab_Model_Customer();
+			$customers = $existing->getCustomers($id)->toArray();
+			$this->view->customers = $customers;
 			$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 			$form->setAction($baseUrl . '/admin/project/edit/' . $id);
 			$this->view->page_title = 'Edit Project <span>#' . $id . '</span>';
@@ -371,7 +379,7 @@ class AdminController extends Zend_Controller_Action
 				$form->removeElement('is_main_customer');
 				$is_main_customer = 0;
 			}
-			$data = array('id' => $id);
+			$data = array('project_id' => $id);
 			$form->populate((array) $data);
 			$this->view->form=$form;
 			if($this->getRequest()->isPost())
@@ -379,7 +387,7 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-					$id = $form->getValue('id');
+					$id = $form->getValue('project_id');
 					$customer_id = $form->getValue('customer_id');
 					if($checkMain != true)
 					{

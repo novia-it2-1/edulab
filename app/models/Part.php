@@ -8,7 +8,6 @@ class Edulab_Model_Part extends Zend_Db_Table_Abstract
 	public function getParts($project_id)
 	{
 		$select = $this->select();
-	
 		$select->where('project_id = ?', $project_id);
 		return $this->fetchAll($select);
 	}

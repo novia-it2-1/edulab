@@ -32,12 +32,12 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 		$select->setIntegrityCheck(false)->from(array('c' => $this->_name));
 		if(!is_null($project_id))
 		{
-			$this->project_id = $customer_id;
+			$this->project_id = $project_id;
 			$select->joinLeft(array('p' => 'projects_customers_link'),'c.customer_id = p.customer_id');
 			$select->where('project_id = ?', $project_id);
 		}
 		else
-				{
+		{
 			$select->order('c.fullname','ASC');
 		}
 		return $this->fetchAll($select);		

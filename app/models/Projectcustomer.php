@@ -9,7 +9,6 @@ class Edulab_Model_Projectcustomer extends Zend_Db_Table_Abstract
 					  "customer_id"=>$customer_id,
 					  "is_main_customer"=>$is_main_customer
 					 );
-					  
 					  $this->insert($data);
 	}
 	public function deleteProjectcustomer($customer_id)

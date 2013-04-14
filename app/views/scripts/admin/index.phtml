@@ -7,9 +7,9 @@
 			<h3>Shortcuts</h3>
 		</div>
 		<div id="shortcuts">
-			<a class="shortcut add-project" href="<?php echo ROOT; ?>admin/project/mode/new">Add Project</a>
-			<a class="shortcut add-customer" href="<?php echo ROOT; ?>admin/customer/mode/new">Add Customer</a>
-			<a class="shortcut add-resource" href="<?php echo ROOT; ?>admin/resource/mode/new">Add Resource</a>
+			<a class="shortcut add-project" href="<?php echo ROOT; ?>admin/project/new">Add Project</a>
+			<a class="shortcut add-customer" href="<?php echo ROOT; ?>admin/customer/new">Add Customer</a>
+			<a class="shortcut add-resource" href="<?php echo ROOT; ?>admin/resource/new">Add Resource</a>
 			<a class="shortcut goto-archive" href="<?php echo ROOT; ?>admin/archive">Project Archive</a>
 			<a class="shortcut goto-reports" href="<?php echo ROOT; ?>admin/archive">Excel Reports</a>
 			<?php /* Link added for pleasure, do only remove comment area at desperate times
@@ -19,9 +19,61 @@
 		<div class="sub-title">
 			<h3>Calender</h3>
 		</div>
-		<div id="calender">
-			Something calender?
-		</div>
+		<?php echo $this->form; ?>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$('#resource_id').prop('selectedIndex',-1);
+			});
+
+			
+			function getId()
+			{
+				var unavailableDates;
+				var e = document.getElementById("resource_id");
+				var a = e.options[e.selectedIndex].value;
+				$.post('<?php echo ROOT; ?>ajax/unavailable.php',{postId:a},
+				function(data)
+				{
+					unavailableDates = new Array();
+					for(var i = 0; i < data.length; i++) 
+					{
+						 unavailableDates[i] = data[i].date;
+					}
+					$("#calendar").datepicker("destroy");
+					$("#calendar").datepicker(
+					{
+						dateFormat: 'yy-mm-dd',
+						beforeShowDay: function(date)
+						{			
+							dmy = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+							if($.inArray(dmy, unavailableDates) == -1)
+							{
+								return [true, ""];
+							}
+							else
+							{
+								return [false, "Unavailable"];
+							}
+						}
+					});
+					
+					
+				}, "json").fail(function()
+									{
+										$("#calendar").datepicker("destroy");
+										$("#calendar").datepicker(
+										{
+											dateFormat: 'yy-mm-dd'
+										});
+									});
+			}
+			$(function(){
+				$("#calendar").datepicker({
+					dateFormat: 'yy-mm-dd'
+				});
+			});
+			</script>
+			<div id="calendar"></div>
 	</div>
 	<div class="column">
 		<div class="sub-title">
