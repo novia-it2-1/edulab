@@ -14,15 +14,16 @@
 					}
 				</script>
 				<a class="button" href="<?php echo ROOT; ?>admin/mail/id/<?php echo $this->project->project_id; ?>" onclick="mailPopUp(this.href);return false">Send status mail</a>
-				<a class="button" href="<?php echo ROOT; ?>admin/project/mode/archive/id/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archive project</a>
+				<a class="button" href="<?php echo ROOT; ?>admin/project/mode/archive/id/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archivate</a>
+				<a class="button" href="<?php echo ROOT; ?><?php echo $this->project->urlkey; ?>">View</a>
 			<?php endif; ?>
-	<script type="text/javascript">
-	$(function(){
-		$("#deadline").datepicker({
-			dateFormat: 'yy-mm-dd'
-		});
-	});
-	</script>
+			<script type="text/javascript">
+			$(function(){
+				$("#deadline").datepicker({
+					dateFormat: 'yy-mm-dd'
+				});
+			});
+			</script>
 		</div>
 		<?php echo $this->form; ?>
 	</div>
