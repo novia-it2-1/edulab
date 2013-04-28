@@ -28,7 +28,9 @@ class AdminController extends Zend_Controller_Action
 		$this->view->id = $id;
 		$mailAddress = new Edulab_Model_Customer();
 		$email = $mailAddress->getMailAddress($id);
-		$this->view->email = $email;
+		$project = new Edulab_Model_Project();
+		$url = $project->getProjects($id);
+		//echo print_r($url,true); die();
 		$mode = $request->getParam('mode');
 		if($mode == "send")
 		{
@@ -41,7 +43,7 @@ class AdminController extends Zend_Controller_Action
 			$transport = new Zend_Mail_Transport_Smtp('localhost', $config);
 			
 			$mail = new Zend_Mail('UTF-8');
-			$mail->setBodyText($message . "\n" . "\n" . 'http:// /' . $id);
+			$mail->setBodyText($message . "\n" . "\n"  . ROOT . $url["urlkey"]);
 			$mail->setFrom('root@localhost.com', 'Some Sender');
 			foreach($email as $em)
 			{

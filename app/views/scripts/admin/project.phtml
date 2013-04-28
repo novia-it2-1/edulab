@@ -14,7 +14,7 @@
 					}
 				</script>
 				<a class="button" href="<?php echo ROOT; ?>admin/mail/id/<?php echo $this->project->project_id; ?>" onclick="mailPopUp(this.href);return false">Send status mail</a>
-				<a class="button" href="<?php echo ROOT; ?>admin/project/mode/archive/id/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archivate</a>
+				<a class="button" href="<?php echo ROOT; ?>admin/project/mode/archive/id/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archive</a>
 				<a class="button" href="<?php echo ROOT; ?><?php echo $this->project->urlkey; ?>">View</a>
 			<?php endif; ?>
 			<script type="text/javascript">
@@ -157,7 +157,6 @@ foreach($parts as $part){
 	</div>
 	<div class="stats">
 		<div class="parts"><b><?php echo $count; ?></b> out of <b><?php echo $tot; ?></b> parts done</div>
-		<div class="deadline"><b>12</b> days to deadline</div>
 	</div>
 	<div class="progress not-started">
 		<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, 1, '.', ''); } ?>">
