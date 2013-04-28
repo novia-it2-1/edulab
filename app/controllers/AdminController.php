@@ -28,9 +28,7 @@ class AdminController extends Zend_Controller_Action
 		$this->view->id = $id;
 		$mailAddress = new Edulab_Model_Customer();
 		$email = $mailAddress->getMailAddress($id);
-		$project = new Edulab_Model_Project();
-		$url = $project->getProjects($id);
-		//echo print_r($url,true); die();
+		$this->view->email = $email;
 		$mode = $request->getParam('mode');
 		if($mode == "send")
 		{
@@ -43,7 +41,7 @@ class AdminController extends Zend_Controller_Action
 			$transport = new Zend_Mail_Transport_Smtp('localhost', $config);
 			
 			$mail = new Zend_Mail('UTF-8');
-			$mail->setBodyText($message . "\n" . "\n"  . ROOT . $url["urlkey"]);
+			$mail->setBodyText($message . "\n" . "\n" . 'http:// /' . $id);
 			$mail->setFrom('root@localhost.com', 'Some Sender');
 			foreach($email as $em)
 			{
@@ -250,14 +248,13 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addpart();
 		$parts = new Edulab_Model_Part();
-		
 		if($mode == "new")
 		{
 			$form->removeElement('status');
 			$request = $this->getRequest();
 			$id = $request->getParam('id');
 			$this->view->page_title = 'New Part for Project <span>#' . $id . '</span>';
-			$data = array('id' => $id);
+			$data = array('project_id' => $id);			
 			$form->populate((array) $data);
 			$this->view->form=$form;
 			if($this->getRequest()->isPost())
@@ -265,11 +262,9 @@ class AdminController extends Zend_Controller_Action
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$id = $form->getValue('id');
+				$id = $form->getValue('project_id');
 				$title = $form->getValue('title');
-				$comment = $form->getValue('comment');
-				$deadline = $form->getValue('deadline');
-				
+				$comment = $form->getValue('comment');				
 				$parts->addParts($id,$title,$comment,$deadline);
 				$this->_redirect('admin/project/edit/' .$id);
 				}
@@ -420,9 +415,9 @@ class AdminController extends Zend_Controller_Action
 		$resourcedates = new Edulab_Model_Partresource();
 		if($mode == "new")
 		{
-			$request = $this->getRequest();
-			$id = $request->getParam('id');
-			$data = array('part_id' => $id);
+			$request = $this->getRequest();			$id = $request->getParam('id');
+			$child_id = $request->getParam('child_id');
+			$data = array('part_id' => $child_id);
 			$form->populate((array) $data);
 			if($this->getRequest()->isPost())
 			{
@@ -433,7 +428,7 @@ class AdminController extends Zend_Controller_Action
 					$resource_id = $form->getValue('resource_id');
 					$date = $form->getValue('date');
 					$resourcedates->addResourcedates($part_id,$resource_id,$date);
-					$this->_redirect('admin/resourcedate/new/' . $id);
+					$this->_redirect('admin/project/edit/' . $id);
 				}
 			}
 			$this->view->form=$form;

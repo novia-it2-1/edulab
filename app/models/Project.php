@@ -17,6 +17,7 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 		$select->where('is_archived = ?', $is_archived);
 		return $this->fetchAll($select);
 	}
+	
 	public function getProjectByKey($key)
 	{
 		$select = $this->select();
@@ -29,6 +30,20 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 		
 		return false;
 	}
+	
+	public function getDeadline($project_id = null)
+	{
+		$select = $this->select();
+		if(!is_null($project_id))
+		{
+			$this->project_id = $project_id;
+			$select->where('project_id = ?', $project_id);
+			$select->columns('deadline');
+			return $this->fetchAll($select);
+		}
+		return false;
+	}
+	
 	public function getParts($project_id = null)
 	{
 		$parts = new Edulab_Model_Part();

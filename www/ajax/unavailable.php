@@ -1,6 +1,6 @@
 <?php
 
-	$conn = mysql_connect("localhost", "root", "");
+	$conn = mysql_connect("edulab.db.9102600.hostedresource.com", "edulab", "T1t1K@k@");
 	mysql_select_db('edulab');
 	
 	$id = $_POST['postId'];

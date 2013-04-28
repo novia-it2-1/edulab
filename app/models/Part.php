@@ -30,16 +30,14 @@ class Edulab_Model_Part extends Zend_Db_Table_Abstract
 		$data = array("project_id"=>$project_id,
 					  "title"=>$title,
 					  "comment"=>$comment,
-					  "deadline"=>$deadline
 					  );
 					  
 					  $this->insert($data);
 	}
-	public function updateParts($part_id,$title,$comment,$deadline,$status)
+	public function updateParts($part_id,$title,$comment,$deadline = null,$status)
 	{
 		$data = array("title"=>$title,
 					  "comment"=>$comment,
-					  "deadline"=>$deadline,
 					  "status"=>$status
 					  );
 					  
