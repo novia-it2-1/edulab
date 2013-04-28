@@ -44,6 +44,20 @@ class Edulab_Model_Customer extends Zend_Db_Table_Abstract
 		return $this->fetchAll($select);		
 	}
 	
+	public function getMailAddress($project_id = null)
+	{
+		$select = $this->select();
+		$select->setIntegrityCheck(false)->from(array('c' => $this->_name),('mail'));
+		if(!is_null($project_id))
+		{
+			$this->project_id = $project_id;
+			$select->joinLeft(array('p' => 'projects_customers_link'),'c.customer_id = p.customer_id',array());
+			$select->where('project_id = ?', $project_id);
+			return $this->fetchAll($select);
+		}
+		return false;
+	}
+	
 	public function addCustomers($fullname,$unit,$phone,$mail,$gender)
 	{
 		$data = array("fullname"=>$fullname,

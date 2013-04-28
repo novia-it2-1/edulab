@@ -202,7 +202,7 @@ ul.errors li{
 .part .status { float:left; padding: 0 20px 20px 20px;}
 .part .status a { background-color:#019cde; display:block; color:#fff; font-size:12px; font-weight:bold; padding:6px 10px; margin-bottom:4px; text-align:center; border-radius:2px; }
 .part .status a.active { background-color:#fff; color:#019cde; display:block; cursor:default; }
-.part .status a:hover { background-color:#fff; color:#019cde; }
+
 
 .part .comment { position:relative; float:left; padding: 0 20px 20px 0; color:#000; font-size:13px; width:310px; height:120px; overflow:hidden; }
 .part .comment .actions { position:absolute; bottom:20px; right:20px; }

@@ -11,7 +11,7 @@
 			<a class="shortcut add-customer" href="<?php echo ROOT; ?>admin/customer/new">Add Customer</a>
 			<a class="shortcut add-resource" href="<?php echo ROOT; ?>admin/resource/new">Add Resource</a>
 			<a class="shortcut goto-archive" href="<?php echo ROOT; ?>admin/archive">Project Archive</a>
-			<a class="shortcut goto-reports" href="<?php echo ROOT; ?>admin/archive">Excel Reports</a>
+			<a class="shortcut goto-reports" href="<?php echo ROOT; ?>admin/export">Excel Report</a>
 			<?php /* Link added for pleasure, do only remove comment area at desperate times
 			<a class="shortcut goto-awesome" href="http://www.pornhub.com/">Go to Awesome</a> */ ?>
 			<div class="clear"></div>
@@ -104,7 +104,7 @@
 			</div>
 			<div class="stats">
 				<div class="parts"><b><?php echo $count; ?></b> out of <b><?php echo $tot; ?></b> parts done</div>
-				<div class="deadline"><b>12</b> days to deadline</div>
+				<div class="deadline">Deadline: <b><?php echo $project->deadline;?></b></div>
 			</div>
 			<div class="progress not-started">
 				<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, '.', ''); } ?>">

@@ -12,6 +12,4 @@
 		$r[] = array("date" => date("Y-n-j",strtotime($rows["date"])));
 	}
 	echo json_encode($r);
-	//$json = json_encode($rows);
-	//echo $json;
 ?>

@@ -17,9 +17,6 @@ public function init()
         $comment = $this->createElement('textarea','comment');
         $comment->setLabel('Comment:')
 				->setAttrib('size',50);
-		$deadline = $this->createElement('text','deadline');
-		$deadline	->setLabel('Deadline:')
-					->addValidator('date');
 		$status = $this->createElement('radio','status');
         $status	->setLabel('Status:')
 				->addMultiOptions(array(
@@ -38,7 +35,6 @@ public function init()
 			$part_id,
             $title,
 			$comment,
-			$deadline,
 			$status,
 			$submit
         ));

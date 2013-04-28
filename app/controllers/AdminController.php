@@ -21,6 +21,57 @@ class AdminController extends Zend_Controller_Action
 		$this->view->form = $ddresource;
 	}
 	
+	public function mailAction()
+	{
+		$request = $this->getRequest();
+		$id = $request->getParam('id');
+		$this->view->id = $id;
+		$mailAddress = new Edulab_Model_Customer();
+		$email = $mailAddress->getMailAddress($id);
+		$this->view->email = $email;
+		$mode = $request->getParam('mode');
+		if($mode == "send")
+		{
+			$message = $_POST["message"];
+			require_once('Zend/Mail/Transport/Smtp.php');
+			require_once ('Zend/Mail.php');
+			
+			$config = array('port' => 25);
+			
+			$transport = new Zend_Mail_Transport_Smtp('localhost', $config);
+			
+			$mail = new Zend_Mail('UTF-8');
+			$mail->setBodyText($message . "\n" . "\n" . 'http:// /' . $id);
+			$mail->setFrom('root@localhost.com', 'Some Sender');
+			foreach($email as $em)
+			{
+				$mail->addTo($em->mail);
+			}
+			$mail->setSubject('TestSubject');
+			$mail->send($transport);
+		}
+		
+	}
+	
+	public function exportAction()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=report.csv');
+		
+		$output = fopen('php://output', 'w');
+
+		//fputcsv($output, array('Column 1', 'Column 2', 'Column 3'));
+		
+		mysql_connect('localhost', 'root', '');
+		mysql_select_db('edulab');
+		$rows = mysql_query('SELECT * FROM projects,parts,customers');
+		
+		while ($row = mysql_fetch_assoc($rows)) fputcsv($output, $row);
+		exit($output);
+		
+		
+	}
+	
 	public function loginAction()
 	{
 		if(Zend_Auth::getInstance()->hasIdentity())
@@ -112,8 +163,9 @@ class AdminController extends Zend_Controller_Action
 					$title = $form->getValue('title');
 					$description = $form->getValue('description');
 					$programmecode = $form->getValue('programmecode');
+					$deadline = $form->getValue('deadline');
 					
-					$projects->addProjects($title,$description,$programmecode);
+					$projects->addProjects($title,$description,$programmecode,$deadline);
 					$this->_redirect('admin');
 				}
 			}
@@ -142,8 +194,9 @@ class AdminController extends Zend_Controller_Action
 					$title = $form->getValue('title');
 					$description = $form->getValue('description');
 					$programmecode = $form->getValue('programmecode');
+					$deadline = $form->getValue('deadline');
 				
-					$projects->updateProjects($id,$title,$description,$programmecode);
+					$projects->updateProjects($id,$title,$description,$programmecode, $deadline);
 					$this->_redirect('admin/project/edit/' . $id);
 				}
 			}

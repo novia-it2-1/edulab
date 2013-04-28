@@ -20,6 +20,8 @@ public function init()
         $programmecode	->setLabel('Programmecode:')
 						->setRequired(true)
 						->addValidator('Alnum',true);
+        $deadline = $this->createElement('text', 'deadline');
+		$deadline	->setLabel('Deadline:');
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel('Save');
 
@@ -28,6 +30,7 @@ public function init()
             $title,
 			$description,
 			$programmecode,
+        	$deadline,
 			$submit
         ));
     }
