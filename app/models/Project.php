@@ -52,9 +52,9 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 	
 	public function addProjects($title,$description,$programmecode,$deadline)
 	{
-		$urlkey = substr(0,8,md5(time()));
+		$urlkey = substr(md5(time()),0,8);
 		while($this->getProjectByKey($urlkey)){
-			$urlkey = substr(0,8,md5(time()));
+			$urlkey = substr(md5(time()),0,8);
 		}
 	
 		$data = array("title"=>$title,
