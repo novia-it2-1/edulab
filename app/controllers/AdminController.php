@@ -49,6 +49,7 @@ class AdminController extends Zend_Controller_Action
 			}
 			$mail->setSubject('TestSubject');
 			$mail->send($transport);
+			echo "<script>window.close();</script>";
 		}
 		
 	}
@@ -60,16 +61,33 @@ class AdminController extends Zend_Controller_Action
 		
 		$output = fopen('php://output', 'w');
 
-		//fputcsv($output, array('Column 1', 'Column 2', 'Column 3'));
-		
 		mysql_connect('localhost', 'root', '');
 		mysql_select_db('edulab');
-		$rows = mysql_query('SELECT * FROM projects,parts,customers');
 		
-		while ($row = mysql_fetch_assoc($rows)) fputcsv($output, $row);
+		$select1 = mysql_query('SELECT title, description, programmecode, deadline FROM projects');
+		$select2 = mysql_query('SELECT * FROM parts');
+		$select3 = mysql_query('SELECT * FROM customers');
+		
+		fputcsv($output, array('Title', 'Description', 'Programmecode', 'Deadline'));
+		while ($row = mysql_fetch_assoc($select1)) fputcsv($output, $row);
+		fputcsv($output, array(' '));
+		
+		fputcsv($output, array('Part_id', 'Project_id', 'Title', 'Comment','Status'));
+		while ($row = mysql_fetch_assoc($select2)) fputcsv($output, $row);
+		fputcsv($output, array(' '));
+		
+		fputcsv($output, array('Customer_id', 'Name', 'Unit', 'Phone', 'Mail','Gender'));
+		while ($row = mysql_fetch_assoc($select3)) fputcsv($output, $row);
+		fputcsv($output, array(' '));
+		
 		exit($output);
-		
-		
+	}
+	
+	public function archiveAction()
+	{
+		$projects = new Edulab_Model_Project();
+		$this->view->projects = $projects;
+		$this->view->customer = new Edulab_Model_Customer();
 	}
 	
 	public function loginAction()
@@ -212,6 +230,16 @@ class AdminController extends Zend_Controller_Action
 			$delete->deleteProject($id);
 			$this->_redirect('admin');
 		}
+		elseif($mode == "archive")
+		{
+			$archive = new Edulab_Model_Project();
+			$request = $this->getRequest();
+			$id = $request->getParam('id');
+			$archive->archiveProject($id);
+			
+			$this->_redirect('admin/archive');
+			
+		}
 	}
 	
 	public function partAction()
@@ -297,8 +325,6 @@ class AdminController extends Zend_Controller_Action
 		$request = $this->getRequest();
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresource();
-		echo ("sadad");
-		
 		if($mode == "new")
 		{
 			$this->view->form=$form;

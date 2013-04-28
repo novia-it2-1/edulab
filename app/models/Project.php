@@ -27,7 +27,7 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 			$this->project_id = $project_id;
 			$select->where('project_id = ?', $project_id);
 			$select->columns('deadline');
-			return $this->fetchAll(PDO::FETCH_NUM,$select);
+			return $this->fetchAll($select);
 		}
 		return false;
 	}
@@ -65,6 +65,14 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 		$where = "project_id = ".$project_id;
 					  
 					  $this->delete($where);
+	}
+	public function archiveProject($project_id)
+	{
+		$data = array("is_archived"=> 1);
+		
+		$where = "project_id = ".$project_id;
+		
+		$this->update($data, $where);
 	}
 }
 ?>

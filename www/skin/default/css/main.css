@@ -209,9 +209,10 @@ ul.errors li{
 .part .comment .actions a { float:right; background-color:#626262; display:block; color:#000; font-size:12px; font-weight:bold; padding:6px 10px; margin-left:4px; text-align:center; border-radius:2px; }
 .part .comment .actions a.edit { float:right; background-color:#aee973; display:block; color:#2a4312; font-size:12px; font-weight:bold; padding:6px 10px; margin-left:4px; text-align:center; border-radius:2px; }
 .part .comment .actions a.delete { float:right; background-color:#e87474; display:block; color:#5e1414; font-size:12px; font-weight:bold; padding:6px 10px; margin-left:4px; text-align:center; border-radius:2px; }
+.part .comment .actions a.assign { float:right; background-color:#fbb917; display:block; color:#5e1414; font-size:12px; font-weight:bold; padding:6px 10px; margin-left:4px; text-align:center; border-radius:2px; }
 .part .comment .actions a.edit:hover { background-color:#fff; color:#2a4312; }
 .part .comment .actions a.delete:hover { background-color:#fff; color:#5e1414; }
-
+.part .comment .actions a.assign:hover { background-color:#fff; color:#5e1414; }
 
 
 

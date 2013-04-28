@@ -1,0 +1,44 @@
+		<div class="sub-title">
+			<h3>Archived Projects</h3>
+		</div>
+		<?php foreach($this->projects->getProjects(null,1) as $project): ?>
+		<?php
+		$parts = $this->projects->getParts($project->project_id);
+		$tot = count($parts);
+		$count = 0;
+		$percentage = 0;
+		foreach($parts as $part){ 
+			if($part->status == '3'){ $count++; } 
+			$percentage += 100 / $tot / 3 * $part->status;
+		}
+		?>
+		<div class="project">
+			<div class="info">
+				<a href="<?php echo ROOT; ?>admin/project/mode/edit/id/<?php echo $project->project_id; ?>"><h3><?php echo $project->title; ?></h3></a>
+				<span><?php echo $project->programmecode; ?></span>
+				<span>
+					<?php
+					
+					$mainCustomer = $this->customer->getMainCustomer($project->project_id);
+					if($mainCustomer){ echo $mainCustomer->fullname; }
+					?>
+				</span>
+			</div>
+			<div class="stats">
+				<div class="parts"><b><?php echo $count; ?></b> out of <b><?php echo $tot; ?></b> parts done</div>
+				<div class="deadline">Deadline: <b><?php echo $project->deadline;?></b></div>
+			</div>
+			<div class="progress not-started">
+				<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, '.', ''); } ?>">
+					<div class="finalizing" style="opacity:<?php if($percentage > 66){ echo '1.0'; }elseif($percentage > 33){ echo number_format(($percentage - 33) / 33, '.', ''); }else{ echo '0'; } ?>">
+						<div class="complete" style="opacity:<?php if($percentage > 99){ echo '1.0'; }elseif($percentage > 66){ echo number_format(($percentage - 66) / 33, '.', ''); }else{ echo '0'; } ?>">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+				<div class="percentage">
+					<?php echo round($percentage); ?>%
+				</div>
+			</div>
+		</div>
+		<?php endforeach; ?>

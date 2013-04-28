@@ -14,6 +14,7 @@
 					}
 				</script>
 				<a class="button" href="<?php echo ROOT; ?>admin/mail/id/<?php echo $this->project->project_id; ?>" onclick="mailPopUp(this.href);return false">Send status mail</a>
+				<a class="button" href="<?php echo ROOT; ?>admin/project/mode/archive/id/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archive project</a>
 			<?php endif; ?>
 	<script type="text/javascript">
 	$(function(){
@@ -59,6 +60,7 @@
 							<div class="actions">
 								<a class="delete" href="javascript:goto('<?php echo ROOT; ?>admin/part/delete/<?php echo $this->project->project_id; ?>/<?php echo $part->part_id; ?>', '<?php echo $part->title; ?>')">Delete</a>
 								<a class="edit" href="<?php echo ROOT; ?>admin/part/edit/<?php echo $this->project->project_id; ?>/<?php echo $part->part_id; ?>">Edit</a>
+								<a class="assign" href="<?php echo ROOT; ?>admin/resourcedate/new/id/<?php echo $part->part_id; ?>">Assign resource</a>
 							</div>
 						</div>
 					</div>
@@ -83,7 +85,7 @@
 					foreach($this->maincustomer as $m)
 					{
 						$strm = implode(" | ", $m);
-						echo ($strm . "<b>Main Customer</b></br>");
+						echo ($strm . " <b>Main Customer</b></br>");
 					}
 					if(isset($this->customers) && count($this->customers))
 					{ 
