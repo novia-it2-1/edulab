@@ -17,13 +17,13 @@
 <div id="wrapper"<?php if($login){ echo ' class="login"'; } ?>>
 	<?php if(!$login): ?>
 	<div id="header">
-		<div id="hleft">
+		<div class="left">
 			<a class="link" id="link-home" href="<?php echo ROOT; ?>admin">Home</a>
 			<a class="link" id="link-project" href="<?php echo ROOT; ?>admin/project">Projects</a>
 			<a class="link" id="link-customer" href="<?php echo ROOT; ?>admin/customer">Customers</a>
 		<!-- <a class="link" id="link-resource" href="<?php echo ROOT; ?>admin/resource">Resources</a> -->
 		</div>
-		<div id="hright">
+		<div class="right">
 			<a class="link" id="link-logout" href="<?php echo ROOT; ?>admin/logout">Log out</a>
 		</div>
 	</div>
@@ -34,7 +34,8 @@
 	</div>
 	<?php if(!$login): ?>
 	<div id="footer">
-		&copy; Copyright 2013 - The ITs
+		<div class="left">&copy; <span>Copyright <?php echo date('Y'); ?>, Tritonia Edulab</span></div>
+		<div class="right">Made by <span>Novia Students</span></div>
 	</div>
 	<?php endif; ?>
 </div>

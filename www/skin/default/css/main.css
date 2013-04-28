@@ -19,8 +19,9 @@ form { margin:0px; padding:0px; }
 #wrapper { width: 960px; margin:0 auto; }
 #wrapper.login { width:320px !important; }
 #header { padding: 30px 0 10px; height:60px; border-bottom:2px solid #019cde; }
-#hleft { float:left; }
-#hright { float:right; }
+h1.logo { background:url(../images/logo.png); text-indent:-999em; width:173px; height:33px; margin-top:15px; }
+.left { float:left; }
+.right { float:right; }
 #content { padding: 30px 0 0; }
 .page-title { padding: 0 0 20px; color:#626262; }
 .page-title span { color:#019cde; }
@@ -33,7 +34,8 @@ form { margin:0px; padding:0px; }
 #columns { margin:0 0 0 -40px; }
 .column { float:left; width:460px; margin-left:40px; padding-bottom:10px; margin-bottom:20px; }
 .notice { background-color: #dfdfdf; padding:20px; }
-#footer { height:20px; padding:16px 0; border-top:2px solid #019cde; font-size:11px; color:#333; }
+#footer { height:20px; padding:16px 0; border-top:2px solid #019cde; font-size:12px; color:#828282; font-weight:bold; }
+#footer span{ color:#4f4f4f; }
 .clear { clear:both; }
 
 /* Mobile view */
@@ -63,8 +65,8 @@ form { margin:0px; padding:0px; }
 .link:hover {
 	color:#019cde;
 }
-#hleft .link { margin-right:30px; }
-#hright .link { margin:0; }
+.left .link { margin-right:30px; }
+.right .link { margin:0; }
 #link-home { background-image:url('../images/home.gif'); }
 #link-project { background-image:url('../images/project.gif'); }
 #link-resource { background-image:url('../images/resource.gif'); }
@@ -181,6 +183,11 @@ ul.errors li{
 .index .project .info { min-width:200px; }
 .index .project .progress { width:10px; text-indent:-9999em; overflow:hidden; }
 
+#admin .contact { padding:10px 0; border-top:1px dotted #828282; }
+#admin .contact h4 { color:#019cde; }
+#admin .right { font-size:12px; color:#4f4f4f; }
+#admin .contact:after { content: "."; visibility: hidden; display: block; height: 0; clear: both; }
+
 /* Mobile view */
 @media screen and (max-width: 960px) {
 	.project .info { min-width:200px; }
@@ -214,9 +221,48 @@ ul.errors li{
 .part .comment .actions a.delete:hover { background-color:#fff; color:#5e1414; }
 .part .comment .actions a.assign:hover { background-color:#fff; color:#5e1414; }
 
+/*
+-----------------------------
+ Front - Customer page
+-----------------------------
+*/
 
+.front #header { padding: 20px 0; height:60px; border-bottom:2px solid #019cde; }
+#header h1.title { color:#828282; }
+#header h1.title span { color:#4f4f4f; }
+#header h2.subtitle { color:#019cde; }
 
+.info-block { margin-bottom:25px; }
+.info-block .info-title { float:left; color:#4f4f4f; width:130px; }
+.info-block .info-content { float:right; width:320px; text-align:justify; }
 
+.info-block .contact { padding:10px 0; border-top:1px dotted #828282; }
+.info-block .contact h4 { color:#019cde; }
+.info-block .right { font-size:12px; color:#4f4f4f; }
+.info-block .contact:after { content: "."; visibility: hidden; display: block; height: 0; clear: both; }
+
+.front .part { height:auto; position:relative; overflow:hidden; }
+.front .part .progress { position:absolute; width:10px; height:300px; }
+.front .part .progress.not-started { background-color: #e73d3d; }
+.front .part .progress.in-progress { background-color: #ed7534; }
+.front .part .progress.finalizing { background-color: #ede634; }
+.front .part .progress.complete { background-color: #5de73d; }
+
+.front .part .info { padding:20px 20px 10px 30px; position:relative; }
+.front .part .text { padding:0 20px 0 30px; position:relative; float:none; }
+.front .part .stat { padding:20px 20px 20px 30px; }
+.front .part .stat h4 { color:#4f4f4f; font-weight:normal; }
+.front .part .stat b { color:#0085bd; font-size:18px; }
+
+/*
+-----------------------------
+ Error page
+-----------------------------
+*/
+
+#wrapper.error { width:300px; border:1px solid #a1a1a1; border-radius:5px; padding:50px 30px; margin-top:20px; box-shadow:0px 0px 10px #ddd; }
+.error h1.logo { margin:0 auto; }
+.error h2 { color:#777; margin:20px 0; text-align:center; }
 
 #ui-datepicker-div{
 display:none

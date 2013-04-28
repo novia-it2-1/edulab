@@ -1,5 +1,6 @@
 SetEnvIf Host 127.0.0.1 APPLICATION_ENV=development
 SetEnvIf Host localhost APPLICATION_ENV=development
+SetEnvIf Host edulab APPLICATION_ENV=development
 SetEnvIf Host edulab.mnixell.com APPLICATION_ENV=production
 RewriteEngine On
 
@@ -13,6 +14,10 @@ RewriteRule . - [E=REWRITEBASE:/edulab/www/]
 
 # RewriteBase equivalent - Production
 RewriteCond %{HTTP_HOST} ^edulab.mnixell.com$
+RewriteRule . - [E=REWRITEBASE:/]
+
+# RewriteBase equivalent - Edulab (local)
+RewriteCond %{HTTP_HOST} ^edulab$
 RewriteRule . - [E=REWRITEBASE:/]
 
 RewriteCond %{REQUEST_FILENAME} !-s

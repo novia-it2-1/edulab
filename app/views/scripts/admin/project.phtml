@@ -81,21 +81,40 @@
 				<a class="button new" href="<?php echo ROOT; ?>admin/projectcustomer/new/<?php echo $this->project->project_id; ?>"><b>+</b> Add Customer</a>
 			<?php endif; ?>
 		</div>
-			<?php if(isset($this->maincustomer) && count($this->maincustomer)):
-					foreach($this->maincustomer as $m)
-					{
-						$strm = implode(" | ", $m);
-						echo ($strm . " <b>Main Customer</b></br>");
-					}
-					if(isset($this->customers) && count($this->customers))
-					{ 
-						foreach($this->customers as $c)
-						{
-							$str = implode(" | ", $c);
-							echo ($str . "</br>");
-						}
-					}
-			?>
+		<?php if(isset($this->maincustomer) && count($this->maincustomer)): ?>
+			<?php if(isset($this->maincustomer)): ?>
+
+
+
+
+
+
+				<div class="contact">
+					<div class="left">
+						<h4><?php echo $this->maincustomer[0]['fullname']; ?></h4>
+						<?php echo $this->maincustomer[0]['unit']; ?>
+					</div>
+					<div class="right">
+						<?php echo $this->maincustomer[0]['mail']; ?>
+						<br /><?php echo $this->maincustomer[0]['phone']; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+			<?php foreach($this->customers as $customer): ?>
+
+
+
+
+
+			<div class="contact">
+				<div class="left">
+					<h4><?php echo $customer['fullname']; ?></h4>
+				</div>
+				<div class="right">
+					<?php echo $customer['mail']; ?>
+				</div>
+			</div>
+			<?php endforeach; ?>
 		<?php elseif($this->mode == 'new'):?>
 		<div class="notice">
 			You must save the project before you can add customers!

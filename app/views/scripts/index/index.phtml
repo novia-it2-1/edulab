@@ -1,1 +1,101 @@
-index (customer part)
+<div id="header">
+	<div class="left">
+		<h2 class="subtitle">Project/Projekt/Hanke</h2>
+		<h1 class="title">#<?php echo $this->project->project_id; ?> "<span><?php echo $this->project->title; ?></span>"</h1>
+	</div>
+	<div class="right">
+		<h1 class="logo">Edulab</h1>
+	</div>
+</div>
+<div id="content">
+	<div id="columns">
+		<div class="column">
+			<div class="page-title">
+				<h2><span>General/Allm&auml;nt/Yleist&auml;</span></h2>
+			</div>
+			<div class="info-block">
+				<div class="info-title">
+					<h3>Description/
+					Beskrivning/
+					Kuvaus</h3>
+				</div>
+				<div class="info-content">
+					<?php echo $this->project->description; ?>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="info-block">
+				<div class="info-title">
+					<h3>Contacts/
+					Kontakter/
+					Yhteistiedot</h3>
+				</div>
+				<div class="info-content">
+					<?php if(isset($this->maincustomer)): ?>
+						<div class="contact">
+							<div class="left">
+								<h4><?php echo $this->maincustomer[0]['fullname']; ?></h4>
+								<?php echo $this->maincustomer[0]['unit']; ?>
+							</div>
+							<div class="right">
+								<?php echo $this->maincustomer[0]['mail']; ?>
+								<br /><?php echo $this->maincustomer[0]['phone']; ?>
+							</div>
+						</div>
+					<?php endif; ?>
+					<?php foreach($this->customers as $customer): ?>
+					<div class="contact">
+						<div class="left">
+							<h4><?php echo $customer['fullname']; ?></h4>
+						</div>
+						<div class="right">
+							<?php echo $customer['mail']; ?>
+						</div>
+					</div>
+					<?php endforeach; ?>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="column">
+			<div class="page-title">
+				<h2><span>Project Parts/Projekt delar/Hanken osat</span></h2>
+			</div>
+			<?php if(isset($this->parts) && count($this->parts)): ?>
+				<?php foreach($this->parts as $part): ?>
+					<?php switch($part->status){ 
+						case "0": $status = 'not-started'; break; 
+						case "1": $status = 'in-progress'; break; 
+						case "2": $status = 'finalizing'; break; 
+						case "3": $status = 'complete'; break; 
+					} ?>
+					<div class="part">
+						<div class="progress <?php echo $status; ?>">
+							&nbsp;
+						</div>
+						<div class="info">
+							<h3><?php echo $part->title; ?></h4>
+						</div>
+						<div class="text">
+							<?php echo $part->comment; ?>
+						</div>
+						<div class="stat">
+							<h4>Part Status/Del status/Osan tili</h4>
+							<b><?php switch($part->status){ 
+								case "0": echo "Not Started/Ej påbörjad/Ei aloitettu"; break; 
+								case "1": echo "Started/Påbörjad/Aloitettu"; break; 
+								case "2": echo "Almost Done/Nästan färdig/Melkein valmis"; break; 
+								case "3": echo "Done/Klar/Valmis"; break; 
+							} ?></b>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<div class="left">&copy; <span>Copyright <?php echo date('Y'); ?>, Tritonia Edulab</span></div>
+	<div class="right">Made by <span>Novia Students</span></div>
+</div>

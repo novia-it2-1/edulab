@@ -4,7 +4,6 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 	protected $_name = 'projects';
 	public $project_id;
 	
-	
 	public function getProjects($project_id = null, $is_archived = 0)
 	{
 		$select = $this->select();
@@ -17,6 +16,19 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 		}
 		$select->where('is_archived = ?', $is_archived);
 		return $this->fetchAll($select);
+	}
+	
+	public function getProjectByKey($key)
+	{
+		$select = $this->select();
+		
+		if(!is_null($key))
+		{
+			$select->where('urlkey = ?', $key);
+			return $this->fetchRow($select);
+		}
+		
+		return false;
 	}
 	
 	public function getDeadline($project_id = null)
@@ -40,10 +52,16 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 	
 	public function addProjects($title,$description,$programmecode,$deadline)
 	{
+		$urlkey = substr(0,8,md5(time()));
+		while($this->getProjectByKey($urlkey)){
+			$urlkey = substr(0,8,md5(time()));
+		}
+	
 		$data = array("title"=>$title,
 					  "description"=>$description,
 					  "programmecode"=>$programmecode,
-					  "deadline" => $deadline);
+					  "deadline" => $deadline,
+					  "key" => $urlkey);
 					  
 					  $this->insert($data);
 	}
