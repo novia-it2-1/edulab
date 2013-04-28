@@ -157,7 +157,7 @@ foreach($parts as $part){
 	</div>
 	<div class="stats">
 		<div class="parts"><b><?php echo $count; ?></b> out of <b><?php echo $tot; ?></b> parts done</div>
-		<div class="deadline"><b>12</b> days to deadline</div>
+		<div class="deadline">Deadline: <b><?php echo $project->deadline;?></b></div>
 	</div>
 	<div class="progress not-started">
 		<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, 1, '.', ''); } ?>">
