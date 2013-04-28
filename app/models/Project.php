@@ -61,7 +61,7 @@ class Edulab_Model_Project extends Zend_Db_Table_Abstract
 					  "description"=>$description,
 					  "programmecode"=>$programmecode,
 					  "deadline" => $deadline,
-					  "key" => $urlkey);
+					  "urlkey" => $urlkey);
 					  
 					  $this->insert($data);
 	}
