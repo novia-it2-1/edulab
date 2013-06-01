@@ -27,7 +27,7 @@
 			<a class="link" id="link-logout" href="<?php echo ROOT; ?>admin/logout">Log out</a>
 		</div>
 	</div>
-	<?php endif; ?>
+	<?php endif; ?>		<?php if(isset($this->messages) && count($this->messages)):?>	<div id="notifications">		<?php foreach($this->messages as $message):?>			<?php echo $message['ok']; ?>		<?php endforeach; ?>	</div>	<?php endif; ?>
 	<div id="content">
 		<?php  echo $this->layout()->content ?>
 		<div class="clear"></div>

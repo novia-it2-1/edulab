@@ -107,13 +107,7 @@
 				<div class="deadline">Deadline: <b><?php echo $project->deadline;?></b></div>
 			</div>
 			<div class="progress not-started">
-				<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, '.', ''); } ?>">
-					<div class="finalizing" style="opacity:<?php if($percentage > 66){ echo '1.0'; }elseif($percentage > 33){ echo number_format(($percentage - 33) / 33, '.', ''); }else{ echo '0'; } ?>">
-						<div class="complete" style="opacity:<?php if($percentage > 99){ echo '1.0'; }elseif($percentage > 66){ echo number_format(($percentage - 66) / 33, '.', ''); }else{ echo '0'; } ?>">
-							&nbsp;
-						</div>
-					</div>
-				</div>
+				<div class="in-progress" style="opacity:<?php if($percentage > 33){ echo '1.0'; }else{ echo number_format($percentage / 33, 1, '.', ''); } ?>">					<div class="finalizing" style="opacity:<?php if($percentage > 66){ echo '1.0'; }elseif($percentage > 33){ echo number_format(($percentage - 33) / 33, 1, '.', ''); }else{ echo '0'; } ?>">						<div class="complete" style="opacity:<?php if($percentage > 99){ echo '1.0'; }elseif($percentage > 66){ echo number_format(($percentage - 66) / 33, 1, '.', ''); }else{ echo '0'; } ?>">							&nbsp;						</div>					</div>				</div>
 			</div>
 		</div>
 		<?php endforeach; ?>

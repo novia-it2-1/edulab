@@ -15,7 +15,7 @@
 				</script>
 				<a class="button" href="<?php echo ROOT; ?>admin/mail/id/<?php echo $this->project->project_id; ?>" onclick="mailPopUp(this.href);return false">Send status mail</a>
 				<a class="button" href="<?php echo ROOT; ?>admin/project/archive/<?php echo $this->project->project_id; ?>" onclick="return confirm('Archive this project?');">Archive</a>
-				<a class="button" href="<?php echo ROOT; ?><?php echo $this->project->urlkey; ?>">View</a>
+				<a class="button" target="_blank" href="<?php echo ROOT; ?><?php echo $this->project->urlkey; ?>">View</a>
 			<?php endif; ?>
 			<script type="text/javascript">
 			$(function(){

@@ -1,3 +1,19 @@
-<?php
-	echo $this->form;
-?>
+<?php if(isset($this->mode)): ?><div class="page-title">	<h2><?php echo $this->page_title; ?></h2></div><div id="columns">	<div class="column">		<div class="sub-title">			<h3>Customer Information</h3>		</div>
+		<?php echo $this->form; ?>	</div>	<div class="column">			</div></div><?php else: ?>
+<div class="sub-title"><h3>All Customers</h3>
+<a class="button new" href="<?php echo ROOT; ?>admin/customer/new"><b>+</b> Add customer</a>
+</div>
+<?php foreach($this->customers as $customer): ?>
+			<div class="contact">
+				<div class="left">
+					<h4><?php echo $customer['fullname']; ?></h4>
+				</div>
+				<div class="right" style="text-align:right;line-height:20px;">
+					<?php echo $customer['unit']; ?>
+					<br />
+					<?php echo $customer['phone']; ?>
+					<br />
+					<?php echo $customer['mail']; ?>
+				</div>
+			</div>
+			<?php endforeach; ?><?php endif; ?>

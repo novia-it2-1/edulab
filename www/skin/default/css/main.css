@@ -22,6 +22,9 @@ form { margin:0px; padding:0px; }
 h1.logo { background:url(../images/logo.png); text-indent:-999em; width:173px; height:33px; margin-top:15px; }
 .left { float:left; }
 .right { float:right; }
+
+#notifications { margin-top:20px; background-color:#C6ECA0; color:#466328; border:1px solid #AEE973; border-radius:2px; padding:10px 20px; font-weight:bold; }
+
 #content { padding: 30px 0 0; }
 .page-title { padding: 0 0 20px; color:#626262; }
 .page-title span { color:#019cde; }
@@ -96,7 +99,7 @@ ul.errors li{
 }
 
 /* Hide all id fields */
-#project_id-label, #project_id-element, #part_id-label, #part_id-element { display:none; }
+#project_id-label, #project_id-element, #part_id-label, #part_id-element, #customer_id-label, #customer_id-element { display:none; }
 
 /*
 -----------------------------

@@ -7,6 +7,7 @@ class AdminController extends Zend_Controller_Action
 		$layout->setLayout('admin');
 		
 		$this->view->headTitle('Edulab - Admin');
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 	}
 
 	public function indexAction()
@@ -351,23 +352,28 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addcustomer();
 		$customers = new Edulab_Model_Customer();
-		
+		$existing = new Edulab_Model_Customer();
+		$customers = $existing->getCustomers()->toArray();
+		$this->view->customers = $customers;
+		$this->view->mode = $mode;
 						
 		if($mode == "new")
 		{
 			$this->view->form=$form;
+			$this->view->page_title = 'New Customer';
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->_request->getPost();
 				if($form->isValid($formData))
 				{
-				$fullname = $form->getValue('fullname');
-				$unit = $form->getValue('unit');
-				$phone = $form->getValue('phone');
-				$mail = $form->getValue('mail');
-				$gender = $form->getValue('gender');
-				$customers->addCustomers($fullname,$unit,$phone,$mail,$gender);
-				$this->_redirect('admin/customer/new');
+					$fullname = $form->getValue('fullname');
+					$unit = $form->getValue('unit');
+					$phone = $form->getValue('phone');
+					$mail = $form->getValue('mail');
+					$gender = $form->getValue('gender');
+					$customers->addCustomers($fullname,$unit,$phone,$mail,$gender);
+					
+					$this->_redirect('admin/customer/new');
 				}
 			}
 		}
@@ -390,7 +396,7 @@ class AdminController extends Zend_Controller_Action
 					$phone = $form->getValue('phone');
 					$mail = $form->getValue('mail');
 					$gender = $form->getValue('gender');
-					
+					$this->_helper->flashMessenger->addMessage(array("ok" => 'Customer succesfully added!'));
 					$customers->updateCustomers($customer_id,$fullname,$unit,$phone,$mail,$gender);
 					$this->_redirect('admin/customer');
 				}
@@ -413,9 +419,10 @@ class AdminController extends Zend_Controller_Action
 		$mode = $request->getParam('mode');
 		$form = new Edulab_Form_Addresourcedate();
 		$resourcedates = new Edulab_Model_Partresource();
+		$id = $request->getParam('id');
 		if($mode == "new")
 		{
-			$request = $this->getRequest();			$id = $request->getParam('id');
+			$request = $this->getRequest();			
 			$child_id = $request->getParam('child_id');
 			$data = array('part_id' => $child_id);
 			$form->populate((array) $data);
@@ -428,7 +435,8 @@ class AdminController extends Zend_Controller_Action
 					$resource_id = $form->getValue('resource_id');
 					$date = $form->getValue('date');
 					$resourcedates->addResourcedates($part_id,$resource_id,$date);
-					$this->_redirect('admin/project/edit/' . $id);
+					$this->_helper->flashMessenger->addMessage(array("ok" => 'Resource #' . $resource_id . ' added to part #' . $child_id . '!'));
+					$this->_redirect('admin/resourcedate/new/' . $id . '/' . $child_id . '/');
 				}
 			}
 			$this->view->form=$form;
@@ -441,6 +449,9 @@ class AdminController extends Zend_Controller_Action
 			$delete->deleteResourcedate($resource_id);
 			$this->_redirect('admin/resourcedate');
 		}
+		
+		$this->view->page_title = 'Assign Resource for Part <span>#' . $child_id . '</span>';
+		$this->view->id = $id;
 	}
 	
 	public function projectcustomerAction()
@@ -475,6 +486,7 @@ class AdminController extends Zend_Controller_Action
 					}
 					$projectcustomer = new Edulab_Model_Projectcustomer();
 					$projectcustomer->addProjectcustomer($id,$customer_id,$is_main_customer);
+					$this->_helper->flashMessenger->addMessage(array("ok" => 'Customer <span>#' . $customer_id . '</span> added to project <span>#' . $id . '</span>!'));
 					$this->_redirect('admin/projectcustomer/new/' . $id);
 				}
 			}
